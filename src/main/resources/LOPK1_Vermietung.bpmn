@@ -299,6 +299,7 @@ execution.setVariable("LOPK1_anzahlMahnungen", anz);]]></bpmn:script>
       <bpmn:outgoing>SequenceFlow_0dgz0km</bpmn:outgoing>
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="SequenceFlow_0dgz0km" sourceRef="Task_17ow77h" targetRef="Task_1lqj72y" />
+    <bpmn:sequenceFlow id="SequenceFlow_0p6glpa" sourceRef="Task_1lqj72y" targetRef="ExclusiveGateway_154f1rd" />
     <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_0disuww" name="Fläche vermietet">
       <bpmn:incoming>SequenceFlow_1dtm4em</bpmn:incoming>
     </bpmn:intermediateThrowEvent>
@@ -325,8 +326,6 @@ execution.setVariable("LOPK1_anzahlMahnungen", anz);]]></bpmn:script>
     <bpmn:sequenceFlow id="SequenceFlow_1yuhfvz" name="Nein" sourceRef="ExclusiveGateway_154f1rd" targetRef="Task_09dfl53" />
     <bpmn:sequenceFlow id="SequenceFlow_0waf3d8" sourceRef="Task_1mesjn8" targetRef="Task_09dfl53" />
     <bpmn:sequenceFlow id="SequenceFlow_1r6ja36" name="Ja" sourceRef="ExclusiveGateway_154f1rd" targetRef="Task_1mesjn8" />
-    <bpmn:sequenceFlow id="SequenceFlow_0p6glpa" sourceRef="Task_1lqj72y" targetRef="ExclusiveGateway_154f1rd" />
-    <bpmn:association id="Association_1iqcl8w" sourceRef="ExclusiveGateway_154f1rd" targetRef="TextAnnotation_1ykl3dg" />
     <bpmn:association id="Association_0wqi44k" sourceRef="ExclusiveGateway_0gyy1b0" targetRef="TextAnnotation_0mhhcdf" />
     <bpmn:association id="Association_1l9gss7" sourceRef="ExclusiveGateway_1hkkz1w" targetRef="TextAnnotation_1sd0joo" />
     <bpmn:textAnnotation id="TextAnnotation_1sd0joo">    <bpmn:text>Mietzinsdepot bezahlt?</bpmn:text>
@@ -335,6 +334,7 @@ execution.setVariable("LOPK1_anzahlMahnungen", anz);]]></bpmn:script>
 </bpmn:textAnnotation>
     <bpmn:textAnnotation id="TextAnnotation_1ykl3dg">    <bpmn:text>Ausbauten durch Mieter?</bpmn:text>
 </bpmn:textAnnotation>
+    <bpmn:association id="Association_1iqcl8w" sourceRef="ExclusiveGateway_154f1rd" targetRef="TextAnnotation_1ykl3dg" />
   </bpmn:process>
   <bpmn:process id="Process_0dh3ce5" isExecutable="false" />
   <bpmn:process id="Process_0kwdh29" isExecutable="false" />
@@ -406,49 +406,49 @@ execution.setVariable("LOPK1_anzahlMahnungen", anz);]]></bpmn:script>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ExclusiveGateway_154f1rd_di" bpmnElement="ExclusiveGateway_154f1rd" isMarkerVisible="true">
-        <dc:Bounds x="3635" y="421" width="50" height="50" />
+        <dc:Bounds x="3304" y="421" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3533" y="516" width="90" height="24" />
+          <dc:Bounds x="3202" y="516" width="90" height="24" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1r6ja36_di" bpmnElement="SequenceFlow_1r6ja36">
-        <di:waypoint xsi:type="dc:Point" x="3660" y="471" />
-        <di:waypoint xsi:type="dc:Point" x="3660" y="612" />
-        <di:waypoint xsi:type="dc:Point" x="3759" y="612" />
+        <di:waypoint xsi:type="dc:Point" x="3329" y="471" />
+        <di:waypoint xsi:type="dc:Point" x="3329" y="612" />
+        <di:waypoint xsi:type="dc:Point" x="3428" y="612" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3671" y="488.5" width="12" height="12" />
+          <dc:Bounds x="3340" y="488.5" width="12" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1yuhfvz_di" bpmnElement="SequenceFlow_1yuhfvz">
-        <di:waypoint xsi:type="dc:Point" x="3685" y="446" />
-        <di:waypoint xsi:type="dc:Point" x="3759" y="446" />
+        <di:waypoint xsi:type="dc:Point" x="3354" y="446" />
+        <di:waypoint xsi:type="dc:Point" x="3428" y="446" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3716.5512697323265" y="425" width="22" height="12" />
+          <dc:Bounds x="3385.5512697323265" y="425" width="22" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1rvnpwa_di" bpmnElement="SequenceFlow_1rvnpwa">
-        <di:waypoint xsi:type="dc:Point" x="3859" y="446" />
-        <di:waypoint xsi:type="dc:Point" x="3956" y="446" />
+        <di:waypoint xsi:type="dc:Point" x="3528" y="446" />
+        <di:waypoint xsi:type="dc:Point" x="3625" y="446" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3862.5" y="425" width="90" height="12" />
+          <dc:Bounds x="3531.5" y="425" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="SubProcess_0cjq04o_di" bpmnElement="Task_1igigis">
-        <dc:Bounds x="3956" y="406" width="100" height="80" />
+        <dc:Bounds x="3625" y="406" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="IntermediateThrowEvent_0disuww_di" bpmnElement="IntermediateThrowEvent_0disuww">
-        <dc:Bounds x="4119" y="428" width="36" height="36" />
+        <dc:Bounds x="3788" y="428" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="4096" y="468" width="82" height="12" />
+          <dc:Bounds x="3765" y="468" width="82" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1dtm4em_di" bpmnElement="SequenceFlow_1dtm4em">
-        <di:waypoint xsi:type="dc:Point" x="4056" y="446" />
-        <di:waypoint xsi:type="dc:Point" x="4088" y="446" />
-        <di:waypoint xsi:type="dc:Point" x="4088" y="446" />
-        <di:waypoint xsi:type="dc:Point" x="4119" y="446" />
+        <di:waypoint xsi:type="dc:Point" x="3725" y="446" />
+        <di:waypoint xsi:type="dc:Point" x="3757" y="446" />
+        <di:waypoint xsi:type="dc:Point" x="3757" y="446" />
+        <di:waypoint xsi:type="dc:Point" x="3788" y="446" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="4058" y="440" width="90" height="12" />
+          <dc:Bounds x="3727" y="440" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="SubProcess_0de1zm4_di" bpmnElement="Task_17ow77h">
@@ -458,10 +458,10 @@ execution.setVariable("LOPK1_anzahlMahnungen", anz);]]></bpmn:script>
         <dc:Bounds x="3072" y="406" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_0cw0kne_di" bpmnElement="Task_1mesjn8">
-        <dc:Bounds x="3759" y="572" width="100" height="80" />
+        <dc:Bounds x="3428" y="572" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_1u010py_di" bpmnElement="Task_09dfl53">
-        <dc:Bounds x="3759" y="406" width="100" height="80" />
+        <dc:Bounds x="3428" y="406" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ServiceTask_0s4r64d_di" bpmnElement="Task_1f2rw49">
         <dc:Bounds x="561" y="406" width="100" height="80" />
@@ -480,12 +480,12 @@ execution.setVariable("LOPK1_anzahlMahnungen", anz);]]></bpmn:script>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0waf3d8_di" bpmnElement="SequenceFlow_0waf3d8">
-        <di:waypoint xsi:type="dc:Point" x="3809" y="572" />
-        <di:waypoint xsi:type="dc:Point" x="3809" y="529" />
-        <di:waypoint xsi:type="dc:Point" x="3809" y="529" />
-        <di:waypoint xsi:type="dc:Point" x="3809" y="486" />
+        <di:waypoint xsi:type="dc:Point" x="3478" y="572" />
+        <di:waypoint xsi:type="dc:Point" x="3478" y="529" />
+        <di:waypoint xsi:type="dc:Point" x="3478" y="529" />
+        <di:waypoint xsi:type="dc:Point" x="3478" y="486" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3779" y="523" width="90" height="12" />
+          <dc:Bounds x="3448" y="523" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="IntermediateThrowEvent_07kgr1v_di" bpmnElement="IntermediateThrowEvent_12as118">
@@ -495,11 +495,11 @@ execution.setVariable("LOPK1_anzahlMahnungen", anz);]]></bpmn:script>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_1ykl3dg_di" bpmnElement="TextAnnotation_1ykl3dg">
-        <dc:Bounds x="3578" y="360" width="100" height="41" />
+        <dc:Bounds x="3247" y="360" width="100" height="41" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_1iqcl8w_di" bpmnElement="Association_1iqcl8w">
-        <di:waypoint xsi:type="dc:Point" x="3652" y="429" />
-        <di:waypoint xsi:type="dc:Point" x="3638" y="401" />
+        <di:waypoint xsi:type="dc:Point" x="3321" y="429" />
+        <di:waypoint xsi:type="dc:Point" x="3307" y="401" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="TextAnnotation_0mhhcdf_di" bpmnElement="TextAnnotation_0mhhcdf">
         <dc:Bounds x="2728" y="370" width="149" height="38" />
@@ -645,12 +645,10 @@ execution.setVariable("LOPK1_anzahlMahnungen", anz);]]></bpmn:script>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="MessageFlow_1culi4v_di" bpmnElement="MessageFlow_1culi4v">
-        <di:waypoint xsi:type="dc:Point" x="2260" y="1027" />
-        <di:waypoint xsi:type="dc:Point" x="2260" y="816" />
-        <di:waypoint xsi:type="dc:Point" x="1577.8604026845637" y="816" />
+        <di:waypoint xsi:type="dc:Point" x="1572" y="1024" />
         <di:waypoint xsi:type="dc:Point" x="1578" y="463" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1918.9302013422819" y="795" width="0" height="12" />
+          <dc:Bounds x="1575" y="722.5" width="0" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Task_1o7ojiq_di" bpmnElement="Task_1o7ojiq">
@@ -764,12 +762,11 @@ execution.setVariable("LOPK1_anzahlMahnungen", anz);]]></bpmn:script>
         <dc:Bounds x="612" y="636" width="610" height="266" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="MessageFlow_0tm9wkq_di" bpmnElement="MessageFlow_0tm9wkq">
-        <di:waypoint xsi:type="dc:Point" x="903" y="1027" />
-        <di:waypoint xsi:type="dc:Point" x="903" y="904" />
+        <di:waypoint xsi:type="dc:Point" x="654" y="1023" />
         <di:waypoint xsi:type="dc:Point" x="654" y="904" />
         <di:waypoint xsi:type="dc:Point" x="654" y="780" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="778.5" y="883" width="0" height="12" />
+          <dc:Bounds x="669" y="957.5" width="0" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="BusinessRuleTask_1hhinnc_di" bpmnElement="Task_1oo1b17">
@@ -1022,9 +1019,9 @@ execution.setVariable("LOPK1_anzahlMahnungen", anz);]]></bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0p6glpa_di" bpmnElement="SequenceFlow_0p6glpa">
         <di:waypoint xsi:type="dc:Point" x="3172" y="446" />
-        <di:waypoint xsi:type="dc:Point" x="3635" y="446" />
+        <di:waypoint xsi:type="dc:Point" x="3304" y="446" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3403.5" y="425" width="0" height="12" />
+          <dc:Bounds x="3238" y="425" width="0" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
