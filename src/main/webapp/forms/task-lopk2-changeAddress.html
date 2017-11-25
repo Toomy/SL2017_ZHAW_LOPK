@@ -1,0 +1,24 @@
+<strong>Recruitment Process</strong>
+
+<p>
+  You can use this form through Camunda Tasklist
+  by setting the formKey of a BPMN User Task to:
+  <code>embedded:app:forms/[name_of_file].html</code>
+</p>
+
+<form class="form-horizontal">
+  <div class="control-group">
+    <label class="control-label">Change Address Done?</label>
+    <div class="controls">
+      <input type="checkbox"
+             cam-variable-name="LOPK2_ChangeRequest_Address_DONE"
+             cam-variable-type="Boolean"
+             name="ChangeDONE"
+             class="form-control" />
+    </div>
+  </div>
+
+  <script cam-script type="text/form-script">
+  // custom JavaScript goes here
+  </script>
+</form>

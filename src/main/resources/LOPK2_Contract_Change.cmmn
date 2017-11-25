@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<cmmn:definitions xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC" xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:cmmn="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Test" targetNamespace="http://bpmn.io/schema/cmmn" exporter="Camunda Modeler" exporterVersion="1.11.2">
+<cmmn:definitions xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC" xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:cmmn="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/cmmn" id="Test" targetNamespace="http://bpmn.io/schema/cmmn" exporter="Camunda Modeler" exporterVersion="1.11.2">
   <cmmn:case id="Case_Contract_Change">
     <cmmn:casePlanModel id="CasePlanModel_1" name="Contract Change">
       <cmmn:planItem id="PlanItem_1" definitionRef="HumanTask_1l7tfub">
@@ -34,17 +34,17 @@
           <cmmn:condition id="Expression_0oc6tn4">${LOPK2_ChangeRequest_LegalStatus}</cmmn:condition>
         </cmmn:ifPart>
       </cmmn:sentry>
-      <cmmn:humanTask id="HumanTask_1l7tfub" name="ChangeAddress" />
-      <cmmn:humanTask id="HumanTask_1ilg6zn" name="Change Rent" />
-      <cmmn:humanTask id="HumanTask_0tgom0r" name="Change Name" />
-      <cmmn:humanTask id="HumanTask_1y3410l" name="Change Legal Status" />
+      <cmmn:humanTask id="HumanTask_1l7tfub" name="ChangeAddress" camunda:formKey="embedded:app:forms/task-lopk2-changeAddress.html" camunda:assignee="demo" />
+      <cmmn:humanTask id="HumanTask_1ilg6zn" name="ChangeRent" camunda:formKey="embedded:app:forms/task-lopk2-changeRent.html" camunda:assignee="demo" />
+      <cmmn:humanTask id="HumanTask_0tgom0r" name="ChangeName" camunda:formKey="embedded:app:forms/task-lopk2-changeName.html" camunda:assignee="demo" />
+      <cmmn:humanTask id="HumanTask_1y3410l" name="ChangeLegalStatus" camunda:formKey="embedded:app:forms/task-lopk2-changeLegalStatus.html" camunda:assignee="demo" />
     </cmmn:casePlanModel>
   </cmmn:case>
   <cmmndi:CMMNDI>
     <cmmndi:CMMNDiagram id="_5a66685b-5f57-4e2f-b1d1-acca4fae04b2">
       <cmmndi:Size xsi:type="dc:Dimension" width="500" height="500" />
       <cmmndi:CMMNShape id="DI_CasePlanModel_1" cmmnElementRef="CasePlanModel_1">
-        <dc:Bounds x="125" y="62" width="290" height="481" />
+        <dc:Bounds x="125" y="61" width="557" height="482" />
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
       <cmmndi:CMMNShape id="PlanItem_0mjidjy_di" cmmnElementRef="PlanItem_1">

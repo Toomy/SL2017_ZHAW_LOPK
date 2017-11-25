@@ -4,15 +4,15 @@
   <bpmn:message id="Message_1uydp40" name="LOPK2_EndMessage_CHANGED" />
   <bpmn:message id="Message_1pt1bs9" name="LOPK2_EndMessage_STORNO" />
   <bpmn:collaboration id="Collaboration_1g5lihq">
-    <bpmn:participant id="Participant_LOPK2" name="LOPK2" processRef="Process_LOPK2" />
+    <bpmn:participant id="Participant_LOPK2" name="LOPK2" processRef="Process_LOPK2_Fachmodell" />
     <bpmn:participant id="Participant_0t3nklh" name="Mieter" processRef="Process_1iyagq7" />
     <bpmn:participant id="Participant_1ixog36" name="Schlichtungsstelle" processRef="Process_06a2k2x" />
     <bpmn:messageFlow id="MessageFlow_1n442z3" sourceRef="IntermediateThrowEvent_0ap6x75" targetRef="Participant_0t3nklh" />
-    <bpmn:messageFlow id="MessageFlow_1bb18ir" sourceRef="Participant_0t3nklh" targetRef="IntermediateCatchEvent_00s1gim" />
+    <bpmn:messageFlow id="MessageFlow_1bb18ir" sourceRef="Participant_0t3nklh" targetRef="IntermediateCatchEvent_00s2gim" />
     <bpmn:messageFlow id="MessageFlow_0q5luny" sourceRef="IntermediateThrowEvent_09gtdyw" targetRef="Participant_1ixog36" />
     <bpmn:messageFlow id="MessageFlow_1s1vhbl" sourceRef="Participant_1ixog36" targetRef="IntermediateCatchEvent_0ihxdex" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_LOPK2" name="LOPK2" isExecutable="false">
+  <bpmn:process id="Process_LOPK2_Fachmodell" name="LOPK2" isExecutable="false">
     <bpmn:laneSet>
       <bpmn:lane id="Lane_04q0o12">
         <bpmn:flowNodeRef>ExclusiveGateway_0mwcu0x</bpmn:flowNodeRef>
@@ -37,7 +37,7 @@
         <bpmn:flowNodeRef>EndEvent_1kd2526</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>IntermediateThrowEvent_0ap6x75</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_0tqhj1g</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>IntermediateCatchEvent_00s1gim</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>IntermediateCatchEvent_00s2gim</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>IntermediateCatchEvent_0nmh1r9</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_0bizeh7</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>IntermediateThrowEvent_09gtdyw</bpmn:flowNodeRef>
@@ -114,8 +114,8 @@ Math.randon() > 0.2]]></bpmn:script>
     <bpmn:sequenceFlow id="SequenceFlow_0g16gw1" sourceRef="SubProcess_1rabjh7" targetRef="Task_1kdzds2" />
     <bpmn:sequenceFlow id="SequenceFlow_1pa77xy" sourceRef="Task_1kdzds2" targetRef="Task_1hjsbhv" />
     <bpmn:sequenceFlow id="SequenceFlow_1jdyb2s" sourceRef="Task_1hjsbhv" targetRef="Task_0vm1xa2" />
-    <bpmn:sequenceFlow id="SequenceFlow_1te5y68" sourceRef="ExclusiveGateway_0tqhj1g" targetRef="IntermediateCatchEvent_00s1gim" />
-    <bpmn:sequenceFlow id="SequenceFlow_0bonyww" sourceRef="IntermediateCatchEvent_00s1gim" targetRef="Task_0wa6ro4" />
+    <bpmn:sequenceFlow id="SequenceFlow_1te5y68" sourceRef="ExclusiveGateway_0tqhj1g" targetRef="IntermediateCatchEvent_00s2gim" />
+    <bpmn:sequenceFlow id="SequenceFlow_0bonyww" sourceRef="IntermediateCatchEvent_00s2gim" targetRef="Task_0wa6ro4" />
     <bpmn:sequenceFlow id="SequenceFlow_019z8ns" sourceRef="ExclusiveGateway_0tqhj1g" targetRef="IntermediateCatchEvent_0nmh1r9" />
     <bpmn:sequenceFlow id="SequenceFlow_17hyl6q" sourceRef="Task_0hobboa" targetRef="Task_0wa6ro4" />
     <bpmn:sequenceFlow id="SequenceFlow_1o76480" sourceRef="IntermediateCatchEvent_0nmh1r9" targetRef="Task_0hobboa" />
@@ -168,7 +168,7 @@ execution.setVariable("LOPK2_ContractResponsePeriod", 10.0);]]></bpmn:script>
       <bpmn:outgoing>SequenceFlow_1te5y68</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_019z8ns</bpmn:outgoing>
     </bpmn:eventBasedGateway>
-    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_00s1gim">
+    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_00s2gim">
       <bpmn:incoming>SequenceFlow_1te5y68</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0bonyww</bpmn:outgoing>
       <bpmn:messageEventDefinition messageRef="Message_0oqm45o" />
@@ -351,7 +351,7 @@ execution.setVariable("LOPK2_ContractResponsePeriod", 10.0);]]></bpmn:script>
     <bpmn:association id="Association_1l0e9yg" sourceRef="SubProcess_1rabjh7" targetRef="TextAnnotation_0vhmk3y" />
     <bpmn:association id="Association_1679ikd" sourceRef="Task_1kdzds2" targetRef="TextAnnotation_0hrm7ot" />
     <bpmn:association id="Association_0tcxs6i" sourceRef="IntermediateThrowEvent_0ap6x75" targetRef="TextAnnotation_0yl7pmh" />
-    <bpmn:association id="Association_1ynq5m7" sourceRef="IntermediateCatchEvent_00s1gim" targetRef="TextAnnotation_14r5dh2" />
+    <bpmn:association id="Association_1ynq5m7" sourceRef="IntermediateCatchEvent_00s2gim" targetRef="TextAnnotation_14r5dh2" />
     <bpmn:association id="Association_1mgiu6j" sourceRef="Task_0hobboa" targetRef="TextAnnotation_06qxxf0" />
     <bpmn:association id="Association_1txlofr" sourceRef="Task_16t0k0s" targetRef="TextAnnotation_126yov0" />
     <bpmn:association id="Association_0lx3zlt" sourceRef="Task_1hjsbhv" targetRef="TextAnnotation_1894ny1" />
@@ -622,7 +622,7 @@ Das externe System sendet diese Meldung]]></bpmn:text>
           <dc:Bounds x="-1058" y="-268" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="IntermediateCatchEvent_00s1gim_di" bpmnElement="IntermediateCatchEvent_00s1gim">
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_00s2gim_di" bpmnElement="IntermediateCatchEvent_00s2gim">
         <dc:Bounds x="-890" y="-315" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="-917" y="-275" width="90" height="12" />

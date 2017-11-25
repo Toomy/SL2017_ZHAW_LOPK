@@ -2,23 +2,21 @@
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.11.2">
   <bpmn:message id="Message_15lpnz5" name="LOPK2_StartMessage" />
   <bpmn:collaboration id="Collaboration_1g5lihq">
-    <bpmn:participant id="Participant_LOPK2" name="LOPK2" processRef="Process_LOPK2" />
+    <bpmn:participant id="Participant_LOPK2" name="LOPK2" processRef="Process_LOPK2_Prototype" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_LOPK2" name="LOPK2" isExecutable="false">
+  <bpmn:process id="Process_LOPK2_Prototype" name="LOPK2 Prototype" isExecutable="true">
     <bpmn:laneSet>
       <bpmn:lane id="Lane_04q0o12">
         <bpmn:flowNodeRef>ExclusiveGateway_0mwcu0x</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0ejjluo</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0cqoaso</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_10w17vt</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>SubProcess_1rabjh7</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_1kd2526</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1kdzds2</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1hjsbhv</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0vm1xa2</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>IntermediateThrowEvent_0ap6x75</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_0tqhj1g</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>IntermediateCatchEvent_00s1gim</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>IntermediateCatchEvent_0nmh1r9</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0hobboa</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0wa6ro4</bpmn:flowNodeRef>
@@ -30,7 +28,6 @@
         <bpmn:flowNodeRef>IntermediateCatchEvent_1xuuv3t</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1lytic1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>IntermediateCatchEvent_0ihxdex</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>EndEvent_0irr5cw</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_021dh7j</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1fiyngs</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0t0xl6q</bpmn:flowNodeRef>
@@ -44,8 +41,12 @@
         <bpmn:flowNodeRef>EndEvent_0fkosqg</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0qevnp5</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1cy03g0</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_1dvielh</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>LOPK2_Signal_Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>IntermediateCatchEvent_1hl95et</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_0iadgua</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_0irr5cw</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_0wavzmo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_0ao09u0</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:exclusiveGateway id="ExclusiveGateway_0mwcu0x" default="SequenceFlow_06abwzy">
@@ -53,18 +54,18 @@
       <bpmn:outgoing>SequenceFlow_06abwzy</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_14qwdoy</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:scriptTask id="Task_0ejjluo" name="Mietvertrag aus CRM laden" scriptFormat="javascript" camunda:resultVariable="LOPK2_ContractLoaded">
-      <bpmn:documentation>Simulation: 20% of the Contract can not be loaded!</bpmn:documentation>
-      <bpmn:incoming>SequenceFlow_19b2jx5</bpmn:incoming>
+    <bpmn:scriptTask id="Task_0ejjluo" name="Mietvertrag aus CRM laden" scriptFormat="javascript">
+      <bpmn:documentation>Simulation: 10% of the Contract can not be loaded!</bpmn:documentation>
+      <bpmn:incoming>SequenceFlow_19jxfpn</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_01aqcrs</bpmn:outgoing>
       <bpmn:script><![CDATA[execution.setVariable("LOPK2_LetterResponse_Eskalations", 0.0);
-Math.randon() > 0.2]]></bpmn:script>
+execution.setVariable("LOPK2_ContractLoaded", Math.random() > 0.1);]]></bpmn:script>
     </bpmn:scriptTask>
     <bpmn:dataStoreReference id="DataStoreReference_1wsxc2j" name="CRM" />
     <bpmn:userTask id="Task_0cqoaso" name="Anpassungsmöglichkeiten prüfen" camunda:assignee="demo">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="LOPK2_ChangeRequest_Accepted" label="Accept change Request" type="boolean" defaultValue="false" />
+          <camunda:formField id="LOPK2_ChangeRequest_Accepted" label="Accept change Request" type="boolean" defaultValue="true" />
           <camunda:formField id="LOPK2_ChangeRequest_Address" label="Adresse ändern" type="boolean" defaultValue="false" />
           <camunda:formField id="LOPK2_ChangeRequest_Rent" label="Mietzins ändern" type="boolean" defaultValue="false" />
           <camunda:formField id="LOPK2_ChangeRequest_Name" label="Firma Name ändern" type="boolean" defaultValue="false" />
@@ -75,26 +76,22 @@ Math.randon() > 0.2]]></bpmn:script>
       <bpmn:outgoing>SequenceFlow_0cn666e</bpmn:outgoing>
       <bpmn:property id="Property_1bdsbag" name="__targetRef_placeholder" />
     </bpmn:userTask>
-    <bpmn:exclusiveGateway id="ExclusiveGateway_10w17vt" default="SequenceFlow_1dz8evl">
+    <bpmn:exclusiveGateway id="ExclusiveGateway_10w17vt" default="SequenceFlow_0hwkh1t">
       <bpmn:incoming>SequenceFlow_0cn666e</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1dz8evl</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1ygbl4p</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0hwkh1t</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_01aqcrs" sourceRef="Task_0ejjluo" targetRef="ExclusiveGateway_0mwcu0x" />
     <bpmn:sequenceFlow id="SequenceFlow_06abwzy" sourceRef="ExclusiveGateway_0mwcu0x" targetRef="Task_0cqoaso" />
     <bpmn:sequenceFlow id="SequenceFlow_0cn666e" sourceRef="Task_0cqoaso" targetRef="ExclusiveGateway_10w17vt" />
-    <bpmn:sequenceFlow id="SequenceFlow_1dz8evl" sourceRef="ExclusiveGateway_10w17vt" targetRef="SubProcess_1rabjh7" />
     <bpmn:sequenceFlow id="SequenceFlow_1ygbl4p" sourceRef="ExclusiveGateway_10w17vt" targetRef="EndEvent_1kd2526">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!LOPK2_changeRequest_Accepted}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!LOPK2_ChangeRequest_Accepted}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_14qwdoy" name="Contract not found" sourceRef="ExclusiveGateway_0mwcu0x" targetRef="EndEvent_0irr5cw">
+    <bpmn:sequenceFlow id="SequenceFlow_14qwdoy" name="Contract not found" sourceRef="ExclusiveGateway_0mwcu0x" targetRef="Task_0wavzmo">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!LOPK2_ContractLoaded}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_0g16gw1" sourceRef="SubProcess_1rabjh7" targetRef="Task_1kdzds2" />
     <bpmn:sequenceFlow id="SequenceFlow_1pa77xy" sourceRef="Task_1kdzds2" targetRef="Task_1hjsbhv" />
     <bpmn:sequenceFlow id="SequenceFlow_1jdyb2s" sourceRef="Task_1hjsbhv" targetRef="Task_0vm1xa2" />
-    <bpmn:sequenceFlow id="SequenceFlow_1te5y68" sourceRef="ExclusiveGateway_0tqhj1g" targetRef="IntermediateCatchEvent_00s1gim" />
-    <bpmn:sequenceFlow id="SequenceFlow_0bonyww" sourceRef="IntermediateCatchEvent_00s1gim" targetRef="Task_0wa6ro4" />
     <bpmn:sequenceFlow id="SequenceFlow_019z8ns" sourceRef="ExclusiveGateway_0tqhj1g" targetRef="IntermediateCatchEvent_0nmh1r9" />
     <bpmn:sequenceFlow id="SequenceFlow_17hyl6q" sourceRef="Task_0hobboa" targetRef="Task_0wa6ro4" />
     <bpmn:sequenceFlow id="SequenceFlow_1o76480" sourceRef="IntermediateCatchEvent_0nmh1r9" targetRef="Task_0hobboa" />
@@ -107,10 +104,6 @@ Math.randon() > 0.2]]></bpmn:script>
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${LOPK2_LetterResponseFork== "ACCEPTED"}]]></bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_1oqkpr9" name="ESCALATE_2" sourceRef="ExclusiveGateway_0bizeh7" targetRef="Task_0qevnp5" />
-    <bpmn:callActivity id="SubProcess_1rabjh7" name="Vertrags Aenderungen durchführen" camunda:caseRef="Case_Contract_Change">
-      <bpmn:incoming>SequenceFlow_1dz8evl</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0g16gw1</bpmn:outgoing>
-    </bpmn:callActivity>
     <bpmn:endEvent id="EndEvent_1kd2526">
       <bpmn:incoming>SequenceFlow_1ygbl4p</bpmn:incoming>
       <bpmn:signalEventDefinition signalRef="Signal_1xweama" />
@@ -120,7 +113,7 @@ Math.randon() > 0.2]]></bpmn:script>
 Kündigungsfrist wird auf 60 Tage gesetzt
 AntwortFrist wird auf 10 Tage gesetzt
 ]]></bpmn:documentation>
-      <bpmn:incoming>SequenceFlow_0g16gw1</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0b939cw</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1pa77xy</bpmn:outgoing>
       <bpmn:script><![CDATA[execution.setVariable("LOPK2_ContractNoticePeriod", 60.0);
 execution.setVariable("LOPK2_ContractResponsePeriod", 10.0);]]></bpmn:script>
@@ -134,11 +127,11 @@ execution.setVariable("LOPK2_ContractResponsePeriod", 10.0);]]></bpmn:script>
       <bpmn:incoming>SequenceFlow_1jdyb2s</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0id8pt5</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_0ap6x75" name="Vertragsänderung">
+    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_0ap6x75" name="VertragsänderungS">
       <bpmn:extensionElements>
         <camunda:inputOutput>
           <camunda:inputParameter name="messageName">LOPK2_Msg_SendContactChangeLetter</camunda:inputParameter>
-          <camunda:inputParameter name="businessKey">${LOPK2_BusinessKey}</camunda:inputParameter>
+          <camunda:inputParameter name="businessKey">${LOPK2_Contract_Number}</camunda:inputParameter>
           <camunda:inputParameter name="messageBody">
             <camunda:map>
               <camunda:entry key="correlationKey">${LOPK2_CorrelationKey}</camunda:entry>
@@ -153,21 +146,14 @@ execution.setVariable("LOPK2_ContractResponsePeriod", 10.0);]]></bpmn:script>
     <bpmn:sequenceFlow id="SequenceFlow_0a7sp02" sourceRef="IntermediateThrowEvent_0ap6x75" targetRef="ExclusiveGateway_0tqhj1g" />
     <bpmn:eventBasedGateway id="ExclusiveGateway_0tqhj1g">
       <bpmn:incoming>SequenceFlow_0a7sp02</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1te5y68</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_019z8ns</bpmn:outgoing>
-      <bpmn:outgoing>SequenceFlow_00dluos</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1alge0u</bpmn:outgoing>
     </bpmn:eventBasedGateway>
-    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_00s1gim">
-      <bpmn:incoming>SequenceFlow_1te5y68</bpmn:incoming>
-      <bpmn:incoming>SequenceFlow_00dluos</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0bonyww</bpmn:outgoing>
-      <bpmn:messageEventDefinition messageRef="Message_0oqm45o" />
-    </bpmn:intermediateCatchEvent>
     <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_0nmh1r9" name="Letter Response Timeout">
       <bpmn:incoming>SequenceFlow_019z8ns</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1o76480</bpmn:outgoing>
       <bpmn:timerEventDefinition>
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">20000</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:userTask id="Task_0hobboa" name="Eskalation Mieter" camunda:assignee="demo">
@@ -188,8 +174,8 @@ execution.setVariable("LOPK2_ContractResponsePeriod", 10.0);]]></bpmn:script>
           <camunda:formField id="LOPK2_LetterResponse_ChangeAccepted" label="Aenderung Akzepiert" type="boolean" defaultValue="true" />
         </camunda:formData>
       </bpmn:extensionElements>
-      <bpmn:incoming>SequenceFlow_0bonyww</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_17hyl6q</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_134yns7</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0n48j4f</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="SequenceFlow_0n48j4f" sourceRef="Task_0wa6ro4" targetRef="Task_16t0k0s" />
@@ -212,7 +198,7 @@ execution.setVariable("LOPK2_ContractResponsePeriod", 10.0);]]></bpmn:script>
       <bpmn:extensionElements>
         <camunda:inputOutput>
           <camunda:inputParameter name="messageName">LOPK2_Msg_SchlichtungsRequest</camunda:inputParameter>
-          <camunda:inputParameter name="businessKey">${LOPK2_BusinessKey}</camunda:inputParameter>
+          <camunda:inputParameter name="businessKey">${LOPK2_Contract_Number}</camunda:inputParameter>
           <camunda:inputParameter name="messageBody">
             <camunda:map>
               <camunda:entry key="correlationKey">${LOPK2_CorrelationKey}</camunda:entry>
@@ -234,7 +220,7 @@ execution.setVariable("LOPK2_ContractResponsePeriod", 10.0);]]></bpmn:script>
       <bpmn:incoming>SequenceFlow_0u4hw8k</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1li88wy</bpmn:outgoing>
       <bpmn:timerEventDefinition>
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">20000</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:userTask id="Task_1lytic1" name="Eskalation Schlichtungsstelle">
@@ -253,10 +239,6 @@ execution.setVariable("LOPK2_ContractResponsePeriod", 10.0);]]></bpmn:script>
       <bpmn:messageEventDefinition messageRef="Message_1hj38su" />
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="SequenceFlow_159mv74" sourceRef="Task_1lytic1" targetRef="ExclusiveGateway_1ytxwno" />
-    <bpmn:endEvent id="EndEvent_0irr5cw">
-      <bpmn:incoming>SequenceFlow_14qwdoy</bpmn:incoming>
-      <bpmn:errorEventDefinition errorRef="Error_08off87" />
-    </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0ddym6q" sourceRef="IntermediateCatchEvent_0ihxdex" targetRef="Task_021dh7j" />
     <bpmn:userTask id="Task_021dh7j" name="Beurteilung Entscheid">
       <bpmn:extensionElements>
@@ -329,30 +311,57 @@ execution.setVariable("LOPK2_ContractResponsePeriod", 10.0);]]></bpmn:script>
       <bpmn:incoming>SequenceFlow_06oa7sf</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0pizfp6</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:sequenceFlow id="SequenceFlow_00dluos" sourceRef="ExclusiveGateway_0tqhj1g" targetRef="IntermediateCatchEvent_00s1gim" />
-    <bpmn:sequenceFlow id="SequenceFlow_19b2jx5" sourceRef="Task_1dvielh" targetRef="Task_0ejjluo" />
-    <bpmn:scriptTask id="Task_1dvielh" name="Simulation Initialize">
-      <bpmn:incoming>SequenceFlow_1choosg</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_19b2jx5</bpmn:outgoing>
-      <bpmn:script><![CDATA[execution.setVariable("LOPK2_CorrelationKey", Date.now().getTime());]]></bpmn:script>
-    </bpmn:scriptTask>
     <bpmn:startEvent id="LOPK2_Signal_Start" name="LOPK2_Start">
       <bpmn:documentation>The start Event message contains the Change Request for a contract</bpmn:documentation>
       <bpmn:extensionElements>
-        <camunda:formData businessKey="LOPK2_Contract_Number">
+        <camunda:formData>
           <camunda:formField id="LOPK2_Contract_Address" label="Address" type="string" defaultValue="Basadingerstrasse, Diessenhofen" />
           <camunda:formField id="LOPK2_Contract_Rent" label="Rent" type="long" defaultValue="2500" />
           <camunda:formField id="LOPK2_Contract_Name" label="Name" type="string" defaultValue="Markus, Ruettimann" />
           <camunda:formField id="LOPK2_Contract_LegalStatus" label="Legal Status" type="string" defaultValue="PRIVAT" />
-          <camunda:formField id="LOPK2_Contract_Number" label="Contract Number" defaultValue="${Date.now().getTime()}" />
+          <camunda:formField id="LOPK2_Contract_Number" label="Contract Number" type="string" defaultValue="4711" />
         </camunda:formData>
       </bpmn:extensionElements>
-      <bpmn:outgoing>SequenceFlow_1choosg</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1cfjudy</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_1choosg" sourceRef="LOPK2_Signal_Start" targetRef="Task_1dvielh" />
-    <bpmn:textAnnotation id="TextAnnotation_04w1tpp">
-      <bpmn:text>Mietvertrag nicht gefunden</bpmn:text>
-    </bpmn:textAnnotation>
+    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_1hl95et" name="VertragsänderungR">
+      <bpmn:incoming>SequenceFlow_1alge0u</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_134yns7</bpmn:outgoing>
+      <bpmn:messageEventDefinition messageRef="Message_0oqm45o" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1alge0u" sourceRef="ExclusiveGateway_0tqhj1g" targetRef="IntermediateCatchEvent_1hl95et" />
+    <bpmn:sequenceFlow id="SequenceFlow_134yns7" sourceRef="IntermediateCatchEvent_1hl95et" targetRef="Task_0wa6ro4" />
+    <bpmn:sequenceFlow id="SequenceFlow_1cfjudy" sourceRef="LOPK2_Signal_Start" targetRef="Task_0iadgua" />
+    <bpmn:sequenceFlow id="SequenceFlow_19jxfpn" sourceRef="Task_0iadgua" targetRef="Task_0ejjluo" />
+    <bpmn:scriptTask id="Task_0iadgua" name="SimInit" scriptFormat="javascript">
+      <bpmn:incoming>SequenceFlow_1cfjudy</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_19jxfpn</bpmn:outgoing>
+      <bpmn:script><![CDATA[execution.setVariable("LOPK2_CorrelationKey", Date.now());
+execution.setVariable("LOPK2_ChangeRequest_Address_DONE",false)
+execution.setVariable("LOPK2_ChangeRequest_Rent_DONE",false)
+execution.setVariable("LOPK2_ChangeRequest_Name_DONE",false)
+execution.setVariable("LOPK2_ChangeRequest_LegalStatus_DONE",false)]]></bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="EndEvent_0irr5cw">
+      <bpmn:incoming>SequenceFlow_0ykfnns</bpmn:incoming>
+      <bpmn:errorEventDefinition errorRef="Error_08off87" />
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0ykfnns" sourceRef="Task_0wavzmo" targetRef="EndEvent_0irr5cw" />
+    <bpmn:userTask id="Task_0wavzmo" name="Abbruch" camunda:assignee="demo">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="Error" label="Error" type="string" defaultValue="No Contrct found Simulation: this happens in 10% of all cases" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_14qwdoy</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0ykfnns</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0hwkh1t" sourceRef="ExclusiveGateway_10w17vt" targetRef="Task_0ao09u0" />
+    <bpmn:sequenceFlow id="SequenceFlow_0b939cw" sourceRef="Task_0ao09u0" targetRef="Task_1kdzds2" />
+    <bpmn:manualTask id="Task_0ao09u0" name="Aenderungen Vornehmen">
+      <bpmn:incoming>SequenceFlow_0hwkh1t</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0b939cw</bpmn:outgoing>
+    </bpmn:manualTask>
     <bpmn:textAnnotation id="TextAnnotation_0296kbr">
       <bpmn:text>Aenderungsantrag abgelehnt</bpmn:text>
     </bpmn:textAnnotation>
@@ -366,17 +375,11 @@ execution.setVariable("LOPK2_ContractResponsePeriod", 10.0);]]></bpmn:script>
     <bpmn:association id="Association_0kw96nu" sourceRef="Task_0ejjluo" targetRef="TextAnnotation_1t7glvn" />
     <bpmn:association id="Association_0nzwyjb" sourceRef="Task_0cqoaso" targetRef="TextAnnotation_1a6tdni" />
     <bpmn:association id="Association_0rnjfdz" sourceRef="EndEvent_1kd2526" targetRef="TextAnnotation_0296kbr" />
-    <bpmn:association id="Association_1l0e9yg" sourceRef="SubProcess_1rabjh7" targetRef="TextAnnotation_0vhmk3y" />
     <bpmn:association id="Association_1679ikd" sourceRef="Task_1kdzds2" targetRef="TextAnnotation_0hrm7ot" />
     <bpmn:association id="Association_0tcxs6i" sourceRef="IntermediateThrowEvent_0ap6x75" targetRef="TextAnnotation_0yl7pmh" />
-    <bpmn:association id="Association_1ynq5m7" sourceRef="IntermediateCatchEvent_00s1gim" targetRef="TextAnnotation_14r5dh2" />
     <bpmn:association id="Association_1mgiu6j" sourceRef="Task_0hobboa" targetRef="TextAnnotation_06qxxf0" />
     <bpmn:association id="Association_1txlofr" sourceRef="Task_16t0k0s" targetRef="TextAnnotation_126yov0" />
     <bpmn:association id="Association_0lx3zlt" sourceRef="Task_1hjsbhv" targetRef="TextAnnotation_1894ny1" />
-    <bpmn:textAnnotation id="TextAnnotation_0vhmk3y">
-      <bpmn:text><![CDATA[Hier werden die einzelnen Vertrags änderungen vorgenommen.
-Hier machen wir ein case management weil die Durchführung der änderungen komplett individuell ist]]></bpmn:text>
-    </bpmn:textAnnotation>
     <bpmn:association id="Association_0k7v3c0" sourceRef="Task_0vm1xa2" targetRef="TextAnnotation_0dgl0x6" />
     <bpmn:association id="Association_0y64h1a" sourceRef="Task_0wa6ro4" targetRef="TextAnnotation_1h7tt4e" />
     <bpmn:association id="Association_10n4mua" sourceRef="Task_0z5vkbf" targetRef="TextAnnotation_1iblxwk" />
@@ -436,11 +439,6 @@ Das externe System empfängt diese Meldung]]></bpmn:text>
 
 Simulation: Anzahl Eskalationen inkrementieren]]></bpmn:text>
     </bpmn:textAnnotation>
-    <bpmn:textAnnotation id="TextAnnotation_14r5dh2">
-      <bpmn:text><![CDATA[Es existiert ein externes system in welchem eingehende Post verarbeitet wird. Die Briefe werden elektronich gescannt und anhand der vorhandenen referenznummern automatisch oder manuell ins LOPK system eingespeist. Die einspeisung sorgt dafür, dass die entsprechenden Prozess instanzen benachrichtigt werden.
-
-Das externe System sendet diese Meldung]]></bpmn:text>
-    </bpmn:textAnnotation>
     <bpmn:textAnnotation id="TextAnnotation_0peypr6">
       <bpmn:text>Der Vertrag wurde geändert</bpmn:text>
     </bpmn:textAnnotation>
@@ -452,11 +450,21 @@ Das externe System sendet diese Meldung]]></bpmn:text>
     <bpmn:textAnnotation id="TextAnnotation_0b46knm">
       <bpmn:text>Mietvertrag muss angepasst werden</bpmn:text>
     </bpmn:textAnnotation>
-    <bpmn:association id="Association_04p3p8w" sourceRef="Task_1dvielh" targetRef="TextAnnotation_0sdzk2r" />
     <bpmn:textAnnotation id="TextAnnotation_0sdzk2r">
       <bpmn:text>This is only required for prototype simulation and sets some runtime values</bpmn:text>
     </bpmn:textAnnotation>
     <bpmn:association id="Association_0e5r9hu" sourceRef="LOPK2_Signal_Start" targetRef="TextAnnotation_0b46knm" />
+    <bpmn:association id="Association_05o0e1j" sourceRef="IntermediateCatchEvent_1hl95et" targetRef="TextAnnotation_08j5fb1" />
+    <bpmn:textAnnotation id="TextAnnotation_08j5fb1">
+      <bpmn:text>Es existiert ein externes system in welchem eingehende Post verarbeitet wird. Die Briefe werden elektronich gescannt und anhand der vorhandenen referenznummern automatisch oder manuell ins LOPK system eingespeist. Die einspeisung sorgt dafür, dass die entsprechenden Prozess instanzen benachrichtigt werden. Das externe System sendet diese Meldung</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TextAnnotation_04w1tpp">
+      <bpmn:text>Mietvertrag nicht gefunden.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TextAnnotation_0s76c1c">
+      <bpmn:text>Hier werden die einzelnen Vertrags änderungen vorgenommen. Hier machen wir ein case management weil die Durchführung der änderungen komplett individuell ist ACTUNG: Case Management habe ich nicht zum laufen bekommen. Darum in BPMN implementiert</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_184fmmf" sourceRef="Task_0ao09u0" targetRef="TextAnnotation_0s76c1c" />
   </bpmn:process>
   <bpmn:error id="Error_08off87" name="Error_Mietvertrag_Nicht_Gefunden" errorCode="-1" />
   <bpmn:message id="Message_1evcmje" name="LOPK2_Msg_SchlichtungsRequest" />
@@ -509,17 +517,17 @@ Das externe System sendet diese Meldung]]></bpmn:text>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_0husmrg_di" bpmnElement="EndEvent_0irr5cw">
-        <dc:Bounds x="-2225" y="-219" width="36" height="36" />
+        <dc:Bounds x="-2225" y="-27" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="-2252" y="-180" width="90" height="12" />
+          <dc:Bounds x="-2252" y="12" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_04w1tpp_di" bpmnElement="TextAnnotation_04w1tpp">
-        <dc:Bounds x="-2173" y="-222" width="100" height="42" />
+        <dc:Bounds x="-2138" y="-30" width="99.99156545209178" height="41.98296221322537" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_12eoy0p_di" bpmnElement="Association_12eoy0p">
-        <di:waypoint xsi:type="dc:Point" x="-2189" y="-203" />
-        <di:waypoint xsi:type="dc:Point" x="-2173" y="-206" />
+        <di:waypoint xsi:type="dc:Point" x="-2189" y="-10" />
+        <di:waypoint xsi:type="dc:Point" x="-2138" y="-17" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ScriptTask_0x2vrf1_di" bpmnElement="Task_0ejjluo">
         <dc:Bounds x="-2365" y="-340" width="100" height="80" />
@@ -533,13 +541,6 @@ Das externe System sendet diese Meldung]]></bpmn:text>
           <dc:Bounds x="-2009" y="-271" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_1dz8evl_di" bpmnElement="SequenceFlow_1dz8evl">
-        <di:waypoint xsi:type="dc:Point" x="-1942" y="-297" />
-        <di:waypoint xsi:type="dc:Point" x="-1819" y="-297" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="-1925.5" y="-318" width="90" height="12" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1ygbl4p_di" bpmnElement="SequenceFlow_1ygbl4p">
         <di:waypoint xsi:type="dc:Point" x="-1964" y="-275" />
         <di:waypoint xsi:type="dc:Point" x="-1964" y="-219" />
@@ -573,23 +574,9 @@ Das externe System sendet diese Meldung]]></bpmn:text>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_14qwdoy_di" bpmnElement="SequenceFlow_14qwdoy">
         <di:waypoint xsi:type="dc:Point" x="-2207" y="-275" />
-        <di:waypoint xsi:type="dc:Point" x="-2207" y="-219" />
+        <di:waypoint xsi:type="dc:Point" x="-2207" y="-163" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="-2189" y="-261" width="60" height="24" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="TextAnnotation_0vhmk3y_di" bpmnElement="TextAnnotation_0vhmk3y">
-        <dc:Bounds x="-1971" y="-471" width="267.99160929432014" height="82.61617900172118" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_1l0e9yg_di" bpmnElement="Association_1l0e9yg">
-        <di:waypoint xsi:type="dc:Point" x="-1791" y="-337" />
-        <di:waypoint xsi:type="dc:Point" x="-1816" y="-388" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_0g16gw1_di" bpmnElement="SequenceFlow_0g16gw1">
-        <di:waypoint xsi:type="dc:Point" x="-1719" y="-297" />
-        <di:waypoint xsi:type="dc:Point" x="-1628" y="-297" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="-1718.5" y="-318" width="90" height="12" />
+          <dc:Bounds x="-2189" y="-235" width="60" height="24" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="TextAnnotation_0hrm7ot_di" bpmnElement="TextAnnotation_0hrm7ot">
@@ -629,12 +616,6 @@ Das externe System sendet diese Meldung]]></bpmn:text>
           <dc:Bounds x="-1058" y="-268" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="IntermediateCatchEvent_00s1gim_di" bpmnElement="IntermediateCatchEvent_00s1gim">
-        <dc:Bounds x="-890" y="-315" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="-917" y="-275" width="90" height="12" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_0oifrnn_di" bpmnElement="Task_0wa6ro4">
         <dc:Bounds x="-583" y="-241" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -659,30 +640,6 @@ Das externe System sendet diese Meldung]]></bpmn:text>
       <bpmndi:BPMNEdge id="Association_0tcxs6i_di" bpmnElement="Association_0tcxs6i">
         <di:waypoint xsi:type="dc:Point" x="-1123" y="-283" />
         <di:waypoint xsi:type="dc:Point" x="-1153" y="-241" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_1te5y68_di" bpmnElement="SequenceFlow_1te5y68">
-        <di:waypoint xsi:type="dc:Point" x="-987" y="-297" />
-        <di:waypoint xsi:type="dc:Point" x="-940" y="-297" />
-        <di:waypoint xsi:type="dc:Point" x="-940" y="-297" />
-        <di:waypoint xsi:type="dc:Point" x="-890" y="-297" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="-970" y="-303" width="90" height="12" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="TextAnnotation_14r5dh2_di" bpmnElement="TextAnnotation_14r5dh2">
-        <dc:Bounds x="-854" y="-514" width="412" height="121" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_1ynq5m7_di" bpmnElement="Association_1ynq5m7">
-        <di:waypoint xsi:type="dc:Point" x="-858" y="-307" />
-        <di:waypoint xsi:type="dc:Point" x="-733" y="-393" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_0bonyww_di" bpmnElement="SequenceFlow_0bonyww">
-        <di:waypoint xsi:type="dc:Point" x="-854" y="-297" />
-        <di:waypoint xsi:type="dc:Point" x="-533" y="-297" />
-        <di:waypoint xsi:type="dc:Point" x="-533" y="-241" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="-738.5" y="-318" width="90" height="12" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_019z8ns_di" bpmnElement="SequenceFlow_019z8ns">
         <di:waypoint xsi:type="dc:Point" x="-1012" y="-272" />
@@ -771,9 +728,6 @@ Das externe System sendet diese Meldung]]></bpmn:text>
         <di:waypoint xsi:type="dc:Point" x="-483" y="-79" />
         <di:waypoint xsi:type="dc:Point" x="-453" y="-78" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="CallActivity_0vnmy43_di" bpmnElement="SubProcess_1rabjh7">
-        <dc:Bounds x="-1819" y="-337" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_1quq2m1_di" bpmnElement="EndEvent_1kd2526">
         <dc:Bounds x="-1982" y="-219" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -1101,30 +1055,9 @@ Das externe System sendet diese Meldung]]></bpmn:text>
         <di:waypoint xsi:type="dc:Point" x="228" y="45" />
         <di:waypoint xsi:type="dc:Point" x="209" y="45" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_00dluos_di" bpmnElement="SequenceFlow_00dluos">
-        <di:waypoint xsi:type="dc:Point" x="-987" y="-297" />
-        <di:waypoint xsi:type="dc:Point" x="-890" y="-297" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="-938.5" y="-318" width="0" height="12" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_19b2jx5_di" bpmnElement="SequenceFlow_19b2jx5">
-        <di:waypoint xsi:type="dc:Point" x="-2420" y="-300" />
-        <di:waypoint xsi:type="dc:Point" x="-2365" y="-300" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="-2392.5" y="-321" width="0" height="12" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ScriptTask_1kv6ium_di" bpmnElement="Task_1dvielh">
-        <dc:Bounds x="-2520" y="-340" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0sdzk2r_di" bpmnElement="TextAnnotation_0sdzk2r">
         <dc:Bounds x="-2588" y="-210" width="181" height="61" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_04p3p8w_di" bpmnElement="Association_04p3p8w">
-        <di:waypoint xsi:type="dc:Point" x="-2479" y="-260" />
-        <di:waypoint xsi:type="dc:Point" x="-2491" y="-210" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="StartEvent_0mmsyt1_di" bpmnElement="LOPK2_Signal_Start">
         <dc:Bounds x="-2589" y="-318" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -1135,13 +1068,87 @@ Das externe System sendet diese Meldung]]></bpmn:text>
         <di:waypoint xsi:type="dc:Point" x="-2567" y="-317" />
         <di:waypoint xsi:type="dc:Point" x="-2559" y="-357" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_1choosg_di" bpmnElement="SequenceFlow_1choosg">
-        <di:waypoint xsi:type="dc:Point" x="-2553" y="-300" />
-        <di:waypoint xsi:type="dc:Point" x="-2520" y="-300" />
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_1hl95et_di" bpmnElement="IntermediateCatchEvent_1hl95et">
+        <dc:Bounds x="-822" y="-315" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="-2581.5" y="-321" width="90" height="12" />
+          <dc:Bounds x="-845" y="-275" width="82" height="24" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1alge0u_di" bpmnElement="SequenceFlow_1alge0u">
+        <di:waypoint xsi:type="dc:Point" x="-987" y="-297" />
+        <di:waypoint xsi:type="dc:Point" x="-822" y="-297" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-904.5" y="-318" width="0" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_134yns7_di" bpmnElement="SequenceFlow_134yns7">
+        <di:waypoint xsi:type="dc:Point" x="-786" y="-297" />
+        <di:waypoint xsi:type="dc:Point" x="-533" y="-297" />
+        <di:waypoint xsi:type="dc:Point" x="-533" y="-241" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-659.5" y="-318" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_08j5fb1_di" bpmnElement="TextAnnotation_08j5fb1">
+        <dc:Bounds x="-1002" y="-512" width="396" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_05o0e1j_di" bpmnElement="Association_05o0e1j">
+        <di:waypoint xsi:type="dc:Point" x="-804" y="-315" />
+        <di:waypoint xsi:type="dc:Point" x="-805" y="-392" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1cfjudy_di" bpmnElement="SequenceFlow_1cfjudy">
+        <di:waypoint xsi:type="dc:Point" x="-2553" y="-300" />
+        <di:waypoint xsi:type="dc:Point" x="-2500" y="-300" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-2526.5" y="-321" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_19jxfpn_di" bpmnElement="SequenceFlow_19jxfpn">
+        <di:waypoint xsi:type="dc:Point" x="-2400" y="-300" />
+        <di:waypoint xsi:type="dc:Point" x="-2365" y="-300" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-2382.5" y="-321" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ScriptTask_087ca0m_di" bpmnElement="Task_0iadgua">
+        <dc:Bounds x="-2500" y="-340" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0ykfnns_di" bpmnElement="SequenceFlow_0ykfnns">
+        <di:waypoint xsi:type="dc:Point" x="-2207" y="-83" />
+        <di:waypoint xsi:type="dc:Point" x="-2207" y="-27" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-2192" y="-61" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_1jxtpu4_di" bpmnElement="Task_0wavzmo">
+        <dc:Bounds x="-2257" y="-163" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0hwkh1t_di" bpmnElement="SequenceFlow_0hwkh1t">
+        <di:waypoint xsi:type="dc:Point" x="-1939" y="-300" />
+        <di:waypoint xsi:type="dc:Point" x="-1819" y="-300" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-1879" y="-321" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0b939cw_di" bpmnElement="SequenceFlow_0b939cw">
+        <di:waypoint xsi:type="dc:Point" x="-1719" y="-300" />
+        <di:waypoint xsi:type="dc:Point" x="-1699" y="-300" />
+        <di:waypoint xsi:type="dc:Point" x="-1699" y="-297" />
+        <di:waypoint xsi:type="dc:Point" x="-1628" y="-297" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-1684" y="-304.5" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_0s76c1c_di" bpmnElement="TextAnnotation_0s76c1c">
+        <dc:Bounds x="-1831.4116059379216" y="-110" width="99.99156545209178" height="296.8960863697706" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_184fmmf_di" bpmnElement="Association_184fmmf">
+        <di:waypoint xsi:type="dc:Point" x="-1770" y="-260" />
+        <di:waypoint xsi:type="dc:Point" x="-1776" y="-110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ManualTask_1iu5jmi_di" bpmnElement="Task_0ao09u0">
+        <dc:Bounds x="-1819" y="-340" width="100" height="80" />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
