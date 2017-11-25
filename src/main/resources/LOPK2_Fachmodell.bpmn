@@ -109,7 +109,7 @@ Math.randon() > 0.2]]></bpmn:script>
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!LOPK2_changeRequest_Accepted}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_14qwdoy" name="Contract not found" sourceRef="ExclusiveGateway_0mwcu0x" targetRef="EndEvent_0irr5cw">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${LOPK2_ContractLoaded}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!LOPK2_ContractLoaded}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0g16gw1" sourceRef="SubProcess_1rabjh7" targetRef="Task_1kdzds2" />
     <bpmn:sequenceFlow id="SequenceFlow_1pa77xy" sourceRef="Task_1kdzds2" targetRef="Task_1hjsbhv" />
@@ -278,7 +278,7 @@ execution.setVariable("LOPK2_ContractResponsePeriod", 10.0);]]></bpmn:script>
     </bpmn:manualTask>
     <bpmn:sequenceFlow id="SequenceFlow_0ej7tm2" sourceRef="Task_0t0xl6q" targetRef="ExclusiveGateway_0snvk4x" />
     <bpmn:sequenceFlow id="SequenceFlow_020a4zc" name="ACCEPTED by Jury" sourceRef="ExclusiveGateway_0snvk4x" targetRef="ExclusiveGateway_1r4wjin">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="${LOPK2_ChangeRequest_AcceptedByJury}"></bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="${LOPK2_ChangeRequest_AcceptedByJury}" />
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0mxd38k" sourceRef="ExclusiveGateway_1r4wjin" targetRef="Task_13llgop" />
     <bpmn:manualTask id="Task_13llgop" name="Geänderter Mietvertrag im CRM speichern">

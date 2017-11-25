@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.11.2">
+  <bpmn:process id="LOKP2_Schlichtungsstelle_Sim" isExecutable="true">
+    <bpmn:sequenceFlow id="SequenceFlow_19w8tcr" sourceRef="StartEvent_1" targetRef="EndEvent_0l4spua" />
+    <bpmn:startEvent id="StartEvent_1" name="Schlichtungs Request">
+      <bpmn:outgoing>SequenceFlow_19w8tcr</bpmn:outgoing>
+      <bpmn:messageEventDefinition messageRef="Message_1ihzz28" />
+    </bpmn:startEvent>
+    <bpmn:endEvent id="EndEvent_0l4spua">
+      <bpmn:incoming>SequenceFlow_19w8tcr</bpmn:incoming>
+      <bpmn:messageEventDefinition messageRef="Message_1dtq3s8" camunda:class="ch.zhaw.sd.delegates.SendMessageByJavaAPI" />
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmn:message id="Message_1ihzz28" name="LOPK2_Msg_SchlichtungsRequest" />
+  <bpmn:message id="Message_1dtq3s8" name="LOPK2_Msg_SchlichtungsResponse" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="LOKP2_Schlichtungsstelle_Sim">
+      <bpmndi:BPMNEdge id="SequenceFlow_19w8tcr_di" bpmnElement="SequenceFlow_19w8tcr">
+        <di:waypoint xsi:type="dc:Point" x="209" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="343" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="276" y="99" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="StartEvent_0xzznaf_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="173" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="164" y="147" width="89" height="24" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0abzuk9_di" bpmnElement="EndEvent_0l4spua">
+        <dc:Bounds x="343" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="361" y="142" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
