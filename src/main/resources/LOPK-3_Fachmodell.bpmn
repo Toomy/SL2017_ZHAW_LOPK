@@ -5,7 +5,7 @@
     <bpmn:participant id="Participant_09epc39" name="Vermieter" processRef="Process_0u8no28" />
     <bpmn:messageFlow id="MessageFlow_04g3gb9" sourceRef="Participant_0vafkkl" targetRef="StartEvent_1kfxopl" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_LOPK3" name="LOPK3" isExecutable="true" />
+  <bpmn:process id="Process_LOPK3" name="LOPK3" isExecutable="false" />
   <bpmn:process id="Process_0u8no28" isExecutable="false">
     <bpmn:startEvent id="StartEvent_1kfxopl">
       <bpmn:outgoing>SequenceFlow_0gyuwm7</bpmn:outgoing>
