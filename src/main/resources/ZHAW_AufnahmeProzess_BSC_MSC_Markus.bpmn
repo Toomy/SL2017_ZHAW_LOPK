@@ -4,7 +4,7 @@
     <bpmn:documentation>Internationales Zeugnis</bpmn:documentation>
     <bpmn:participant id="Participant_0ogqdjz" name="Aufnahmeprozess" processRef="Process_1" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_1" isExecutable="true">
+  <bpmn:process id="Process_1" isExecutable="false">
     <bpmn:laneSet>
       <bpmn:lane id="Lane_StudentServices" name="Student Services">
         <bpmn:flowNodeRef>StartEvent_0eifq6a</bpmn:flowNodeRef>

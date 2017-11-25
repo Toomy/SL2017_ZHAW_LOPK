@@ -14,7 +14,7 @@
     <bpmn:messageFlow id="MessageFlow_00tzjpx" sourceRef="IntermediateThrowEvent_0z29nev" targetRef="Participant_0mlnalh" />
     <bpmn:messageFlow id="MessageFlow_05n6kla" sourceRef="Participant_0mlnalh" targetRef="IntermediateCatchEvent_0rzv50z" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_1" isExecutable="true">
+  <bpmn:process id="Process_1" isExecutable="false">
     <bpmn:laneSet>
       <bpmn:lane id="Lane_02o6sef" name="">
         <bpmn:flowNodeRef>Task_1o7ojiq</bpmn:flowNodeRef>

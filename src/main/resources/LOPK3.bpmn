@@ -12,7 +12,7 @@
     <bpmn:messageFlow id="MessageFlow_0ehw2w3" sourceRef="Participant_0vafkkl" targetRef="Task_10vs30t" />
     <bpmn:messageFlow id="MessageFlow_1on8nwm" sourceRef="EndEvent_0hg8she" targetRef="Participant_0vafkkl" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_LOPK3" name="LOPK3" isExecutable="true" />
+  <bpmn:process id="Process_LOPK3" name="LOPK3" isExecutable="false" />
   <bpmn:process id="Process_0u8no28" isExecutable="false">
     <bpmn:sequenceFlow id="SequenceFlow_04ag3bh" sourceRef="Task_0xo4o6c" targetRef="EndEvent_1uu02ry" />
     <bpmn:sequenceFlow id="SequenceFlow_0d58ugu" sourceRef="IntermediateCatchEvent_05o938u" targetRef="Task_0xo4o6c" />

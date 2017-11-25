@@ -1,20 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<cmmn:definitions xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC" xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:cmmn="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Test" targetNamespace="http://bpmn.io/schema/cmmn">
-  <cmmn:case id="Case_1">
-    <cmmn:casePlanModel id="CasePlanModel_1" name="A CasePlanModel">
-      <cmmn:planItem id="PlanItem_1" definitionRef="Task_1" />
-      <cmmn:task id="Task_1" />
+<cmmn:definitions xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC" xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:cmmn="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Test" targetNamespace="http://bpmn.io/schema/cmmn" exporter="Camunda Modeler" exporterVersion="1.11.2">
+  <cmmn:case id="Case_Contract_Change">
+    <cmmn:casePlanModel id="CasePlanModel_1" name="Contract Change">
+      <cmmn:planItem id="PlanItem_1" definitionRef="HumanTask_1l7tfub">
+        <cmmn:entryCriterion id="EntryCriterion_0lnvvmg" sentryRef="Sentry_1k2tvmj" />
+      </cmmn:planItem>
+      <cmmn:planItem id="PlanItem_1r69707" definitionRef="HumanTask_1ilg6zn">
+        <cmmn:entryCriterion id="EntryCriterion_11akj5c" sentryRef="Sentry_0q1qxtg" />
+      </cmmn:planItem>
+      <cmmn:planItem id="PlanItem_0mffe3r" definitionRef="HumanTask_0tgom0r">
+        <cmmn:entryCriterion id="EntryCriterion_1anp153" sentryRef="Sentry_0u3sxgj" />
+      </cmmn:planItem>
+      <cmmn:planItem id="PlanItem_073lpn1" definitionRef="HumanTask_1y3410l">
+        <cmmn:entryCriterion id="EntryCriterion_1ip5wyg" sentryRef="Sentry_0tmvmcl" />
+      </cmmn:planItem>
+      <cmmn:sentry id="Sentry_1k2tvmj">
+        <cmmn:ifPart id="IfPart_0p4obvg">
+          <cmmn:condition id="Expression_0s8p2vd">${LOPK2_ChangeRequest_Address}</cmmn:condition>
+        </cmmn:ifPart>
+      </cmmn:sentry>
+      <cmmn:sentry id="Sentry_0q1qxtg">
+        <cmmn:ifPart id="IfPart_0itlndi">
+          <cmmn:condition id="Expression_1k09gjc">${LOPK2_ChangeRequest_Rent}</cmmn:condition>
+        </cmmn:ifPart>
+      </cmmn:sentry>
+      <cmmn:sentry id="Sentry_0u3sxgj">
+        <cmmn:ifPart id="IfPart_1farct0">
+          <cmmn:condition id="Expression_197xyes">${LOPK2_ChangeRequest_Name}</cmmn:condition>
+        </cmmn:ifPart>
+      </cmmn:sentry>
+      <cmmn:sentry id="Sentry_0tmvmcl">
+        <cmmn:ifPart id="IfPart_0x1a3f7">
+          <cmmn:condition id="Expression_0oc6tn4">${LOPK2_ChangeRequest_LegalStatus}</cmmn:condition>
+        </cmmn:ifPart>
+      </cmmn:sentry>
+      <cmmn:humanTask id="HumanTask_1l7tfub" name="ChangeAddress" />
+      <cmmn:humanTask id="HumanTask_1ilg6zn" name="Change Rent" />
+      <cmmn:humanTask id="HumanTask_0tgom0r" name="Change Name" />
+      <cmmn:humanTask id="HumanTask_1y3410l" name="Change Legal Status" />
     </cmmn:casePlanModel>
   </cmmn:case>
   <cmmndi:CMMNDI>
     <cmmndi:CMMNDiagram id="_5a66685b-5f57-4e2f-b1d1-acca4fae04b2">
       <cmmndi:Size xsi:type="dc:Dimension" width="500" height="500" />
       <cmmndi:CMMNShape id="DI_CasePlanModel_1" cmmnElementRef="CasePlanModel_1">
-        <dc:Bounds x="114" y="63" width="534" height="389" />
+        <dc:Bounds x="125" y="62" width="290" height="481" />
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
-      <cmmndi:CMMNShape id="PlanItem_1_di" cmmnElementRef="PlanItem_1">
-        <dc:Bounds x="150" y="96" width="100" height="80" />
+      <cmmndi:CMMNShape id="PlanItem_0mjidjy_di" cmmnElementRef="PlanItem_1">
+        <dc:Bounds x="215" y="96" width="100" height="80" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="PlanItem_15ie6de_di" cmmnElementRef="PlanItem_1r69707">
+        <dc:Bounds x="215" y="198" width="100" height="80" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="PlanItem_090aab1_di" cmmnElementRef="PlanItem_0mffe3r">
+        <dc:Bounds x="215" y="307" width="100" height="80" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="PlanItem_0iez9dd_di" cmmnElementRef="PlanItem_073lpn1">
+        <dc:Bounds x="215" y="412" width="100" height="80" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="EntryCriterion_0lnvvmg_di" cmmnElementRef="EntryCriterion_0lnvvmg">
+        <dc:Bounds x="205" y="126" width="20" height="28" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="EntryCriterion_11akj5c_di" cmmnElementRef="EntryCriterion_11akj5c">
+        <dc:Bounds x="205" y="225" width="20" height="28" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="EntryCriterion_1anp153_di" cmmnElementRef="EntryCriterion_1anp153">
+        <dc:Bounds x="205" y="334" width="20" height="28" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="EntryCriterion_1ip5wyg_di" cmmnElementRef="EntryCriterion_1ip5wyg">
+        <dc:Bounds x="205" y="442" width="20" height="28" />
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
     </cmmndi:CMMNDiagram>
