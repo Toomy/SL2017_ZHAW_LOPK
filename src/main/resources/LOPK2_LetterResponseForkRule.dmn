@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" id="definitions_0kevzbp" name="definitions" namespace="http://camunda.org/schema/1.0/dmn">
-  <decision id="decision" name="LOPK2_LetterResponseForkRuleSet">
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="definitions_0kevzbp" name="definitions" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="letter_response_evaluation_ruleset" name="LOPK2_LetterResponseForkRuleSet">
     <decisionTable id="decisionTable" hitPolicy="FIRST">
-      <input id="input1" label="LOPK2_LetterResponse_ChangeAccepted">
+      <input id="input1" label="LOPK2_LetterResponse_ChangeAccepted" camunda:inputVariable="">
         <inputExpression id="inputExpression1" typeRef="boolean">
-          <text></text>
+          <text>${LOPK2_LetterResponse_ChangeAccepted}</text>
         </inputExpression>
       </input>
-      <input id="InputClause_1uig17x" label="LOPK2_LetterResponse_Eskalations">
-        <inputExpression id="LiteralExpression_1i3q4ee" typeRef="long" />
+      <input id="InputClause_1uig17x" label="LOPK2_LetterResponse_Eskalations" camunda:inputVariable="">
+        <inputExpression id="LiteralExpression_1i3q4ee" typeRef="long">
+          <text>${LOPK2_LetterResponse_Eskalations}</text>
+        </inputExpression>
       </input>
-      <output id="output1" label="LOPK2_LetterResponseFork" name="" typeRef="string" />
+      <output id="output1" label="LOPK2_LetterResponse_EvaluationResult" name="LOPK2_LetterResponse_EvaluationResult" typeRef="string" />
       <rule id="row-315378584-6">
         <description>Alles gut</description>
         <inputEntry id="UnaryTests_1ott7ob">

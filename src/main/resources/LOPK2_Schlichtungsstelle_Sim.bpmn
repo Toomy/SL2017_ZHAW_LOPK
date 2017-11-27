@@ -1,23 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.11.2">
   <bpmn:process id="LOKP2_Schlichtungsstelle_Sim" isExecutable="true">
-    <bpmn:sequenceFlow id="SequenceFlow_19w8tcr" sourceRef="StartEvent_1" targetRef="IntermediateThrowEvent_0cj5j73" />
+    <bpmn:sequenceFlow id="SequenceFlow_19w8tcr" sourceRef="StartEvent_1" targetRef="Task_1cdar3p" />
     <bpmn:startEvent id="StartEvent_1" name="Schlichtungs Request">
       <bpmn:outgoing>SequenceFlow_19w8tcr</bpmn:outgoing>
       <bpmn:messageEventDefinition messageRef="Message_1ihzz28" />
     </bpmn:startEvent>
     <bpmn:endEvent id="EndEvent_0l4spua">
-      <bpmn:incoming>SequenceFlow_02gts57</bpmn:incoming>
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="messageName">LOPK2_Msg_SchlichtungsResponse</camunda:inputParameter>
+          <camunda:inputParameter name="businessKey">${businessKey}</camunda:inputParameter>
+          <camunda:inputParameter name="messageBody">
+            <camunda:map>
+              <camunda:entry key="LOPK2_ChangeRequest_AcceptedByJury">${LOPK2_ChangeRequest_AcceptedByJury}</camunda:entry>
+            </camunda:map>
+          </camunda:inputParameter>
+          <camunda:inputParameter name="correlationKey">${correlationKey}</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1oka8no</bpmn:incoming>
       <bpmn:messageEventDefinition messageRef="Message_1dtq3s8" camunda:class="ch.zhaw.sd.delegates.SendMessageByJavaAPI" />
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_02gts57" sourceRef="IntermediateThrowEvent_0cj5j73" targetRef="EndEvent_0l4spua" />
-    <bpmn:intermediateCatchEvent id="IntermediateThrowEvent_0cj5j73">
+    <bpmn:sequenceFlow id="SequenceFlow_1oka8no" sourceRef="Task_1cdar3p" targetRef="EndEvent_0l4spua" />
+    <bpmn:userTask id="Task_1cdar3p" name="Antwort Schlichtungsstelle" camunda:assignee="demo">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="LOPK2_ChangeRequest_AcceptedByJury" label="Do you accept the Contract changes" type="boolean" defaultValue="true" />
+          <camunda:formField id="LOPK2_Contract_Number" label="Contract Number" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="LOPK2_Contract_Name" label="Contract Name" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="LOPK2_Contract_Address" label="Contract Address" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="LOPK2_LetterResponse_Eskalations" label="Escalations so far" type="long">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_19w8tcr</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_02gts57</bpmn:outgoing>
-      <bpmn:timerEventDefinition>
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1S</bpmn:timeDuration>
-      </bpmn:timerEventDefinition>
-    </bpmn:intermediateCatchEvent>
+      <bpmn:outgoing>SequenceFlow_1oka8no</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:textAnnotation id="TextAnnotation_1bcsars">
+      <bpmn:text>Sie sind die Schlichtungsstelle - entscheiden Sie</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_06235th" sourceRef="Task_1cdar3p" targetRef="TextAnnotation_1bcsars" />
   </bpmn:process>
   <bpmn:message id="Message_1ihzz28" name="LOPK2_Msg_SchlichtungsRequest" />
   <bpmn:message id="Message_1dtq3s8" name="LOPK2_Msg_SchlichtungsResponse" />
@@ -25,9 +63,9 @@
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="LOKP2_Schlichtungsstelle_Sim">
       <bpmndi:BPMNEdge id="SequenceFlow_19w8tcr_di" bpmnElement="SequenceFlow_19w8tcr">
         <di:waypoint xsi:type="dc:Point" x="209" y="120" />
-        <di:waypoint xsi:type="dc:Point" x="300" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="256" y="120" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="209.5" y="99" width="90" height="12" />
+          <dc:Bounds x="187.5" y="99" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="StartEvent_0xzznaf_di" bpmnElement="StartEvent_1">
@@ -42,19 +80,23 @@
           <dc:Bounds x="392" y="142" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_02gts57_di" bpmnElement="SequenceFlow_02gts57">
-        <di:waypoint xsi:type="dc:Point" x="336" y="120" />
+      <bpmndi:BPMNEdge id="SequenceFlow_1oka8no_di" bpmnElement="SequenceFlow_1oka8no">
+        <di:waypoint xsi:type="dc:Point" x="356" y="120" />
         <di:waypoint xsi:type="dc:Point" x="419" y="120" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="377.5" y="99" width="0" height="12" />
+          <dc:Bounds x="387.5" y="99" width="0" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="IntermediateCatchEvent_00r12vf_di" bpmnElement="IntermediateThrowEvent_0cj5j73">
-        <dc:Bounds x="300" y="102" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="318" y="142" width="0" height="12" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="UserTask_1gs95z5_di" bpmnElement="Task_1cdar3p">
+        <dc:Bounds x="256" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1bcsars_di" bpmnElement="TextAnnotation_1bcsars">
+        <dc:Bounds x="193" y="217" width="325" height="38" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_06235th_di" bpmnElement="Association_06235th">
+        <di:waypoint xsi:type="dc:Point" x="323" y="160" />
+        <di:waypoint xsi:type="dc:Point" x="348" y="217" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

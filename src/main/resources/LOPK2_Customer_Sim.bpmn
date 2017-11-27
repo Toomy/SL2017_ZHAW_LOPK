@@ -24,17 +24,30 @@
       <bpmn:messageEventDefinition messageRef="Message_0iy5vd9" camunda:class="ch.zhaw.sd.delegates.SendMessageByJavaAPI" />
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1bhv414" sourceRef="Task_0v202eu" targetRef="EndEvent_024mj1r" />
-    <bpmn:userTask id="Task_0v202eu" name="Answer the Letter" camunda:assignee="demo">
+    <bpmn:userTask id="Task_0v202eu" name="Antwort Mieter" camunda:assignee="demo">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="LOPK2_LetterResponse_ChangeAccepted" label="Accept Change" type="boolean" defaultValue="false" />
-          <camunda:formField id="LOPK2_LetterResponse_Invalid" label="Make it Invalid" type="boolean" defaultValue="false" />
-          <camunda:formField id="correlationKey" label="Correlation Key" type="string" defaultValue="${correlationKey}" />
+          <camunda:formField id="LOPK2_LetterResponse_ChangeAccepted" label="Möchtest du die Vertragsänderung akzeptieren" type="boolean" defaultValue="false" />
+          <camunda:formField id="LOPK2_LetterResponse_Invalid" label="Möchtest du eine ungültige Antwort geben?" type="boolean" defaultValue="false" />
+          <camunda:formField id="correlationKey" label="Correlation Key Reference" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="LOPK2_Contract_Number" label="Contract Number Reference" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="true" />
+            </camunda:validation>
+          </camunda:formField>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1khq2cw</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1bhv414</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:textAnnotation id="TextAnnotation_0t2366u">
+      <bpmn:text>Sie sind der Mieter - entscheiden Sie</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0hjc3ur" sourceRef="Task_0v202eu" targetRef="TextAnnotation_0t2366u" />
   </bpmn:process>
   <bpmn:message id="Message_1wzeuom" name="LOPK2_Msg_SendContactChangeLetter" />
   <bpmn:message id="Message_0iy5vd9" name="LOPK2_Msg_ReceiveContactChangeLetter" />
@@ -69,6 +82,13 @@
       <bpmndi:BPMNShape id="UserTask_0c9j033_di" bpmnElement="Task_0v202eu">
         <dc:Bounds x="288" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0t2366u_di" bpmnElement="TextAnnotation_0t2366u">
+        <dc:Bounds x="268" y="199" width="309" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0hjc3ur_di" bpmnElement="Association_0hjc3ur">
+        <di:waypoint xsi:type="dc:Point" x="373" y="160" />
+        <di:waypoint xsi:type="dc:Point" x="407" y="199" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
