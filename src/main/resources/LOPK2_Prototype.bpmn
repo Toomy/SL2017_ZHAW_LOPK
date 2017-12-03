@@ -280,7 +280,7 @@ execution.setVariable("businessKey", "2222");]]></camunda:script>
     <bpmn:userTask id="Task_0wavzmo" name="Abbruch" camunda:assignee="demo">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="Error" label="Error" type="string" defaultValue="No Contract found! Simulation: this happens in 10% of all cases">
+          <camunda:formField id="Error" label="Error" type="string" defaultValue="No Contract found - Restart the Process again! Simulation: this happens in 10% of all cases">
             <camunda:validation>
               <camunda:constraint name="readonly" config="true" />
             </camunda:validation>
