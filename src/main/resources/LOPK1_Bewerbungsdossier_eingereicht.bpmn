@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.10.0">
+  <bpmn:process id="Process_Bewerbung_Einreichen" name="Bewerbung_Einreichen" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="Income" label="Einkommen" type="long" defaultValue="20000" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>SequenceFlow_05vt77s</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_05vt77s" sourceRef="StartEvent_1" targetRef="EndEvent_1tt47ke" />
+    <bpmn:endEvent id="EndEvent_1tt47ke">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="messageBody">
+            <camunda:map>
+              <camunda:entry key="Income">${Icome}</camunda:entry>
+            </camunda:map>
+          </camunda:inputParameter>
+          <camunda:inputParameter name="messageName">Bewerbungsdossier_eingereicht</camunda:inputParameter>
+          <camunda:inputParameter name="businessKey">777</camunda:inputParameter>
+          <camunda:inputParameter name="correlationKey">7</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_05vt77s</bpmn:incoming>
+      <bpmn:messageEventDefinition messageRef="Message_0bwy6u2" camunda:class="ch.zhaw.sd.delegates.SendMessageByJavaAPI" />
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmn:message id="Message_0bwy6u2" name="Bewerbungsdossier_eingereicht" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_Bewerbung_Einreichen">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="173" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_05vt77s_di" bpmnElement="SequenceFlow_05vt77s">
+        <di:waypoint xsi:type="dc:Point" x="209" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="292" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="250.5" y="99" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_1934s1w_di" bpmnElement="EndEvent_1tt47ke">
+        <dc:Bounds x="292" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="310" y="142" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
