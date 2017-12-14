@@ -1,19 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.10.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.10.0">
   <bpmn:process id="subProcess_LEP-05" name="LEP 05 Auftragsmanagement" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>SequenceFlow_1itehuh</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1itehuh" sourceRef="StartEvent_1" targetRef="Task_1ks0kc3" />
-    <bpmn:endEvent id="EndEvent_1yy9a1p">
-      <bpmn:incoming>SequenceFlow_0uzxad5</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_0uzxad5" sourceRef="Task_1ks0kc3" targetRef="EndEvent_1yy9a1p" />
-    <bpmn:manualTask id="Task_1ks0kc3" name="LEP 05 Auftragsmanagement">
+    <bpmn:userTask id="Task_1ks0kc3" name="LEP 05 Auftragsmanagement">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="correlationKey" label="correlationKey" type="string" defaultValue="200" />
+        </camunda:formData>
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1itehuh</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0uzxad5</bpmn:outgoing>
-    </bpmn:manualTask>
+      <bpmn:outgoing>SequenceFlow_0rch5k7</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0rch5k7" sourceRef="Task_1ks0kc3" targetRef="IntermediateThrowEvent_1xl8wor" />
+    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_1xl8wor" name="send something">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="messageName">mySpecialMessage</camunda:inputParameter>
+          <camunda:inputParameter name="businessKey">100</camunda:inputParameter>
+          <camunda:inputParameter name="correlationKey">200</camunda:inputParameter>
+          <camunda:inputParameter name="messageBody">
+            <camunda:map>
+              <camunda:entry key="correlationKey">${correlationKey}</camunda:entry>
+            </camunda:map>
+          </camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0rch5k7</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0uo9lnz</bpmn:outgoing>
+      <bpmn:messageEventDefinition messageRef="Message_1au1gw4" camunda:class="ch.zhaw.sd.delegates.SendMessageByJavaAPI" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0uo9lnz" sourceRef="IntermediateThrowEvent_1xl8wor" targetRef="Task_1polsa9" />
+    <bpmn:endEvent id="EndEvent_0psblrc">
+      <bpmn:incoming>SequenceFlow_1x3r9is</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1x3r9is" sourceRef="Task_1polsa9" targetRef="EndEvent_0psblrc" />
+    <bpmn:userTask id="Task_1polsa9" name="Task xyz">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="Eingabe" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0uo9lnz</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1x3r9is</bpmn:outgoing>
+    </bpmn:userTask>
   </bpmn:process>
+  <bpmn:message id="Message_1au1gw4" name="mySpecialMessage" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="subProcess_LEP-05">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
@@ -23,24 +57,47 @@
         <di:waypoint xsi:type="dc:Point" x="209" y="120" />
         <di:waypoint xsi:type="dc:Point" x="294" y="120" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="251.5" y="99" width="0" height="12" />
+          <dc:Bounds x="206.5" y="99" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="EndEvent_1yy9a1p_di" bpmnElement="EndEvent_1yy9a1p">
-        <dc:Bounds x="475" y="102" width="36" height="36" />
+      <bpmndi:BPMNShape id="UserTask_05p2v2c_di" bpmnElement="Task_1ks0kc3">
+        <dc:Bounds x="294" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0rch5k7_di" bpmnElement="SequenceFlow_0rch5k7">
+        <di:waypoint xsi:type="dc:Point" x="394" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="447" y="120" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="493" y="142" width="0" height="12" />
+          <dc:Bounds x="420.5" y="99" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="IntermediateThrowEvent_0fklhph_di" bpmnElement="IntermediateThrowEvent_1xl8wor">
+        <dc:Bounds x="447" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="428" y="142" width="77" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0uzxad5_di" bpmnElement="SequenceFlow_0uzxad5">
-        <di:waypoint xsi:type="dc:Point" x="394" y="120" />
-        <di:waypoint xsi:type="dc:Point" x="475" y="120" />
+      <bpmndi:BPMNEdge id="SequenceFlow_0uo9lnz_di" bpmnElement="SequenceFlow_0uo9lnz">
+        <di:waypoint xsi:type="dc:Point" x="483" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="568" y="120" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="434.5" y="99" width="0" height="12" />
+          <dc:Bounds x="525.5" y="99" width="0" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ManualTask_0oxvknm_di" bpmnElement="Task_1ks0kc3">
-        <dc:Bounds x="294" y="80" width="100" height="80" />
+      <bpmndi:BPMNShape id="EndEvent_0psblrc_di" bpmnElement="EndEvent_0psblrc">
+        <dc:Bounds x="730" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="748" y="142" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1x3r9is_di" bpmnElement="SequenceFlow_1x3r9is">
+        <di:waypoint xsi:type="dc:Point" x="668" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="730" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="699" y="99" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_1d56thu_di" bpmnElement="Task_1polsa9">
+        <dc:Bounds x="568" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
