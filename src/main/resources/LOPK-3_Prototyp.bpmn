@@ -123,15 +123,13 @@
     <bpmn:sequenceFlow id="SequenceFlow_1ohe3dm" name="Zahlung für Schlussrechnung nicht rechtzeitig eingegangen" sourceRef="ExclusiveGateway_1rdlw42" targetRef="IntermediateCatchEvent_1301j3p" />
     <bpmn:sequenceFlow id="SequenceFlow_1awiuro" sourceRef="IntermediateCatchEvent_1301j3p" targetRef="Task_1mchah7" />
     <bpmn:sequenceFlow id="SequenceFlow_1yvws2h" sourceRef="Task_1mchah7" targetRef="ExclusiveGateway_0oa5iaq" />
-    <bpmn:sequenceFlow id="SequenceFlow_0pwmkmq" name="Forderung übersteigt Mietzinsdepot" sourceRef="ExclusiveGateway_0oa5iaq" targetRef="Task_0a3009i">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${debtReported==false}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_0pwmkmq" name="Forderung übersteigt Mietzinsdepot" sourceRef="ExclusiveGateway_0oa5iaq" targetRef="Task_0a3009i" />
     <bpmn:sequenceFlow id="SequenceFlow_0crv5kd" name="Zahlungsfrist verstrichen" sourceRef="ExclusiveGateway_00wn6ym" targetRef="IntermediateCatchEvent_05o938u" />
     <bpmn:sequenceFlow id="SequenceFlow_077efy3" sourceRef="Task_0a3009i" targetRef="ExclusiveGateway_00wn6ym" />
     <bpmn:sequenceFlow id="SequenceFlow_1u7o78x" sourceRef="ExclusiveGateway_00wn6ym" targetRef="IntermediateCatchEvent_0zmqe3d" />
     <bpmn:sequenceFlow id="SequenceFlow_0zfbk0k" sourceRef="IntermediateCatchEvent_1kptxyc" targetRef="ExclusiveGateway_1y01l66" />
     <bpmn:sequenceFlow id="SequenceFlow_0q1v8oq" name="Forderung übersteigt nicht Mietzinsdepot" sourceRef="ExclusiveGateway_0oa5iaq" targetRef="ExclusiveGateway_1y01l66">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${debtReported==false}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${currentDebtNotTooHigh > 0.5}]]></bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_05njtjq" sourceRef="IntermediateCatchEvent_0zmqe3d" targetRef="ExclusiveGateway_1y01l66" />
     <bpmn:sequenceFlow id="SequenceFlow_0y4szp6" sourceRef="ExclusiveGateway_1y01l66" targetRef="Task_1ery4rl" />
@@ -710,8 +708,13 @@ execution.setVariable("businessKey","100");]]></camunda:script>
     <bpmn:userTask id="Task_1mchah7" name="Verrechnung Schlussrechnung mit Mietzinsdepot">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="debtReported" type="boolean" />
+          <camunda:formField id="totalDebtDemanded" label="Geforderte Gesamtsumme" type="string" />
         </camunda:formData>
+        <camunda:inputOutput>
+          <camunda:outputParameter name="currentDebtNotTooHigh">
+            <camunda:script scriptFormat="javascript">Math.random();</camunda:script>
+          </camunda:outputParameter>
+        </camunda:inputOutput>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1awiuro</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1yvws2h</bpmn:outgoing>
@@ -719,7 +722,7 @@ execution.setVariable("businessKey","100");]]></camunda:script>
         <bpmn:targetRef>DataStoreReference_18mq6i5</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:userTask>
-    <bpmn:exclusiveGateway id="ExclusiveGateway_0oa5iaq">
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0oa5iaq" default="SequenceFlow_0pwmkmq">
       <bpmn:incoming>SequenceFlow_1yvws2h</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0q1v8oq</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0pwmkmq</bpmn:outgoing>
@@ -836,7 +839,7 @@ execution.setVariable("businessKey","100");]]></camunda:script>
       <bpmndi:BPMNShape id="IntermediateThrowEvent_1lau4rd_di" bpmnElement="IntermediateThrowEvent_0ps2uge">
         <dc:Bounds x="1819" y="841" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1744" y="847" width="51" height="24" />
+          <dc:Bounds x="1750" y="844" width="51" height="24" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="StartEvent_1lggm5r_di" bpmnElement="StartEvent_1kfxopl">
