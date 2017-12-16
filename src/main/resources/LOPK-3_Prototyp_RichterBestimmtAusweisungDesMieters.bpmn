@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.10.0">
+  <bpmn:process id="LOPK3_Richter_bestimmt_Ausweisung_des_Mieters" name="Richter bestimmt Ausweisung des Mieters" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_00jn2wj</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_00jn2wj" sourceRef="StartEvent_1" targetRef="IntermediateThrowEvent_071idju" />
+    <bpmn:endEvent id="EndEvent_0r9jlnp">
+      <bpmn:incoming>SequenceFlow_0295nz0</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0295nz0" sourceRef="IntermediateThrowEvent_071idju" targetRef="EndEvent_0r9jlnp" />
+    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_071idju" name="Ausweisung als rechtsmässig deklarieren">
+      <bpmn:incoming>SequenceFlow_00jn2wj</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0295nz0</bpmn:outgoing>
+      <bpmn:signalEventDefinition signalRef="Signal_1lbh95c" />
+    </bpmn:intermediateThrowEvent>
+  </bpmn:process>
+  <bpmn:signal id="Signal_1lbh95c" name="courtJudgement" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="LOPK3_Richter_bestimmt_Ausweisung_des_Mieters">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="173" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_00jn2wj_di" bpmnElement="SequenceFlow_00jn2wj">
+        <di:waypoint xsi:type="dc:Point" x="209" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="283" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="246" y="99" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_0r9jlnp_di" bpmnElement="EndEvent_0r9jlnp">
+        <dc:Bounds x="385" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="403" y="142" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0295nz0_di" bpmnElement="SequenceFlow_0295nz0">
+        <di:waypoint xsi:type="dc:Point" x="319" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="385" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="352" y="99" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="IntermediateThrowEvent_04vn3d2_di" bpmnElement="IntermediateThrowEvent_071idju">
+        <dc:Bounds x="283" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="264" y="142" width="77" height="36" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

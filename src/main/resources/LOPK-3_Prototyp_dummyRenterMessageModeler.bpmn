@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.10.0">
+  <bpmn:process id="LOPK3_dummyRenterMessageModeler" name="LOPK3_dummyRenterMessageModeler" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="businessKey" label="Business Key" type="string" defaultValue="200" />
+        </camunda:formData>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="javascript"><![CDATA[execution.setVariable("correlationKey","456");
+execution.setVariable("businessKey","200");]]></camunda:script>
+        </camunda:executionListener>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>SequenceFlow_060xrwl</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_060xrwl" sourceRef="StartEvent_1" targetRef="IntermediateThrowEvent_0i4zp4e" />
+    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_0i4zp4e" name="Mieter schickt Kündigung">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="messageName">RenterSendsRentCancellation</camunda:inputParameter>
+          <camunda:inputParameter name="businessKey">200</camunda:inputParameter>
+          <camunda:inputParameter name="messageBody">
+            <camunda:map>
+              <camunda:entry key="correlationKey">${correlationKey}</camunda:entry>
+            </camunda:map>
+          </camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_060xrwl</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1epxxd4</bpmn:outgoing>
+      <bpmn:messageEventDefinition messageRef="Message_0lhwbel" camunda:class="ch.zhaw.sd.delegates.SendMessageByJavaAPI" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:endEvent id="EndEvent_00wqid3">
+      <bpmn:incoming>SequenceFlow_1l17k73</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1epxxd4" sourceRef="IntermediateThrowEvent_0i4zp4e" targetRef="Task_0ymeas9" />
+    <bpmn:sequenceFlow id="SequenceFlow_0nqgs81" sourceRef="Task_0ymeas9" targetRef="ExclusiveGateway_14s6zn9" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_14s6zn9" default="SequenceFlow_1l17k73">
+      <bpmn:incoming>SequenceFlow_0nqgs81</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1l17k73</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0tc8ezp</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_1l17k73" name="keine Nachmieter gefunden" sourceRef="ExclusiveGateway_14s6zn9" targetRef="EndEvent_00wqid3" />
+    <bpmn:sequenceFlow id="SequenceFlow_0tc8ezp" name="Interessierte Nachmieter gefunden" sourceRef="ExclusiveGateway_14s6zn9" targetRef="IntermediateThrowEvent_0fwdz19">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${interestedPeopleFound == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_0fwdz19" name="Vermieter über potentielle Nachmieter informieren">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="messageName">newRentersFound</camunda:inputParameter>
+          <camunda:inputParameter name="businessKey">200</camunda:inputParameter>
+          <camunda:inputParameter name="messageBody">
+            <camunda:map>
+              <camunda:entry key="correlationKey">456</camunda:entry>
+            </camunda:map>
+          </camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0tc8ezp</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_00vycmy</bpmn:outgoing>
+      <bpmn:messageEventDefinition messageRef="Message_0hfvs97" camunda:class="ch.zhaw.sd.delegates.SendMessageByJavaAPI" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:endEvent id="EndEvent_1wnnyqj">
+      <bpmn:incoming>SequenceFlow_00vycmy</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_00vycmy" sourceRef="IntermediateThrowEvent_0fwdz19" targetRef="EndEvent_1wnnyqj" />
+    <bpmn:userTask id="Task_0ymeas9" name="Suche Nachmieter">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="interestedPeopleFound" label="Potentielle Nachmieter gefunden?" type="boolean" defaultValue="true" />
+        </camunda:formData>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="javascript"><![CDATA[execution.setVariable("correlationKey","789");]]></camunda:script>
+        </camunda:executionListener>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1epxxd4</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0nqgs81</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmn:message id="Message_0lhwbel" name="RenterSendsRentCancellation" />
+  <bpmn:message id="Message_0hfvs97" name="newRentersFound" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="LOPK3_dummyRenterMessageModeler">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="173" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_060xrwl_di" bpmnElement="SequenceFlow_060xrwl">
+        <di:waypoint xsi:type="dc:Point" x="209" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="276" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="242.5" y="99" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="IntermediateThrowEvent_1kpexec_di" bpmnElement="IntermediateThrowEvent_0i4zp4e">
+        <dc:Bounds x="276" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="259" y="150" width="69" height="24" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_00wqid3_di" bpmnElement="EndEvent_00wqid3">
+        <dc:Bounds x="660" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="678" y="142" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1epxxd4_di" bpmnElement="SequenceFlow_1epxxd4">
+        <di:waypoint xsi:type="dc:Point" x="312" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="372" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="342" y="99" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0nqgs81_di" bpmnElement="SequenceFlow_0nqgs81">
+        <di:waypoint xsi:type="dc:Point" x="472" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="515" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="493.5" y="99" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ExclusiveGateway_14s6zn9_di" bpmnElement="ExclusiveGateway_14s6zn9" isMarkerVisible="true">
+        <dc:Bounds x="515" y="95" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="540" y="149" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1l17k73_di" bpmnElement="SequenceFlow_1l17k73">
+        <di:waypoint xsi:type="dc:Point" x="565" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="660" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="570" y="99" width="86" height="24" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0tc8ezp_di" bpmnElement="SequenceFlow_0tc8ezp">
+        <di:waypoint xsi:type="dc:Point" x="540" y="145" />
+        <di:waypoint xsi:type="dc:Point" x="540" y="216" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="555" y="166" width="61" height="36" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="IntermediateThrowEvent_1bwpwlb_di" bpmnElement="IntermediateThrowEvent_0fwdz19">
+        <dc:Bounds x="522" y="216" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="505" y="256" width="74" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1wnnyqj_di" bpmnElement="EndEvent_1wnnyqj">
+        <dc:Bounds x="660" y="216" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="678" y="256" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_00vycmy_di" bpmnElement="SequenceFlow_00vycmy">
+        <di:waypoint xsi:type="dc:Point" x="558" y="234" />
+        <di:waypoint xsi:type="dc:Point" x="660" y="234" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="609" y="213" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_0qdbm4h_di" bpmnElement="Task_0ymeas9">
+        <dc:Bounds x="372" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
