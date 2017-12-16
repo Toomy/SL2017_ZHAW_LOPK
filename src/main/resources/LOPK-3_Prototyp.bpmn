@@ -24,7 +24,7 @@
     </bpmn:extensionElements>
     <bpmn:sequenceFlow id="SequenceFlow_1tqcn27" sourceRef="Task_17mbi6e" targetRef="EndEvent_0ua3kb0" />
     <bpmn:sequenceFlow id="SequenceFlow_0hql4u7" name="Mieter ist Premiumkunde" sourceRef="ExclusiveGateway_1qnlu1n" targetRef="Task_17mbi6e">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${cancelConfirmed<0.1}]]></bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${cancelConfirmed<0.05}]]></bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_17sjsa6" sourceRef="ExclusiveGateway_1qnlu1n" targetRef="Task_0w9jyvj" />
     <bpmn:sequenceFlow id="SequenceFlow_0mx3adi" sourceRef="Task_0pkuc1n" targetRef="ExclusiveGateway_1qnlu1n" />
@@ -161,6 +161,12 @@
       </bpmn:manualTask>
     </bpmn:subProcess>
     <bpmn:userTask id="Task_0w9jyvj" name="Kündigung schreiben">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="actualDate" label="Heutiges Datum" type="date" />
+          <camunda:formField id="validCancellationDate" label="Datum der Beendigung des Mietverhältnisses" type="date" />
+        </camunda:formData>
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_17sjsa6</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_146d8c8</bpmn:outgoing>
       <bpmn:property id="Property_1aa2lb4" name="__targetRef_placeholder" />
@@ -180,7 +186,7 @@
     <bpmn:userTask id="Task_1i7f000" name="Vertragskonditionen ermitteln">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="cancellationStatus" label="Ausstehende Zahlung" type="boolean" defaultValue="true" />
+          <camunda:formField id="cancellationStatus" label="Wurden ausstehende Zahlungen festgestellt?" type="boolean" defaultValue="true" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1cgzwzx</bpmn:incoming>
@@ -189,7 +195,8 @@
     <bpmn:userTask id="Task_0wzvyvn" name="Meldung für KVP machen">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="incompleteFileId" label="Dossier-ID" type="string" />
+          <camunda:formField id="incompleteFileId" label="ID des mangehhaften Dossiers eingeben" type="string" />
+          <camunda:formField id="problemDescription" label="Mängel beim Dossier beschreiben" type="string" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0dm5zau</bpmn:incoming>
@@ -266,7 +273,7 @@
     <bpmn:userTask id="Task_1224dsr" name="vermietete Wohnung auswählen">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="appartmentList" label="Vermietete Wohnungen" type="enum">
+          <camunda:formField id="appartmentList" label="Eine der vermieteten Wohnungen aussuchen" type="enum">
             <camunda:value id="Wohnung_1" name="Wohnung 1" />
             <camunda:value id="Wohnung_2" name="Wohnung 2" />
             <camunda:value id="Wohnung_3" name="Wohnung 3" />
@@ -297,9 +304,9 @@ execution.setVariable("businessKey","100");]]></camunda:script>
     <bpmn:userTask id="Task_StammdatenPruefen" name="Stammdaten prüfen">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="customerId" label="Kunden-ID" type="string" defaultValue="123-100-123-Hanzo" />
-          <camunda:formField id="dateOfCancellationReceived" label="Heutiges Datum" type="date" />
-          <camunda:formField id="rentInCancellation" label="Aktuelles Mietverhältnis" type="boolean" defaultValue="false" />
+          <camunda:formField id="customerId" label="Kunden-ID des Mieters eingeben" type="string" defaultValue="123-100-123-Hanzo" />
+          <camunda:formField id="dateOfCancellationReceived" label="Heutiges Datum eingeben" type="date" />
+          <camunda:formField id="rentInCancellation" label="Wurde die Kündigung schon eingeleitet?" type="boolean" defaultValue="false" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1u4of4u</bpmn:incoming>
@@ -354,7 +361,7 @@ execution.setVariable("businessKey","100");]]></camunda:script>
     <bpmn:userTask id="Task_0a2x1bb" name="Rechts- und Vertragskonformität prüfen">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="cancellationOk" label="Kuendigung rechtskonform?" type="boolean" />
+          <camunda:formField id="cancellationOk" label="Ist die Kündigung rechtskonform?" type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1szhtia</bpmn:incoming>
@@ -428,8 +435,8 @@ execution.setVariable("businessKey","100");]]></camunda:script>
     <bpmn:userTask id="Task_00tndok" name="Rückbau und Rückgabe festlegen">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="rebuildNecessary" label="Rückbau nötig" type="boolean" defaultValue="false" />
-          <camunda:formField id="handoverDate" label="Rückgabedatum" type="date" />
+          <camunda:formField id="rebuildNecessary" label="Ist ein Rückbau nötig?" type="boolean" defaultValue="false" />
+          <camunda:formField id="handoverDate" label="Mit dem Mieter vereinbartes Rückgabedatum festlegen" type="date" />
         </camunda:formData>
         <camunda:inputOutput>
           <camunda:outputParameter name="deadlineMet">
@@ -446,6 +453,11 @@ execution.setVariable("businessKey","100");]]></camunda:script>
       </bpmn:dataInputAssociation>
     </bpmn:userTask>
     <bpmn:userTask id="Task_1fg1gy6" name="Kündigung in Mieterdossier ablegen">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="updateRentalStatus" label="Kündigung im CRM hinterlegen?" type="boolean" defaultValue="true" />
+        </camunda:formData>
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_02101vt</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1swclpk</bpmn:outgoing>
     </bpmn:userTask>
@@ -459,7 +471,7 @@ execution.setVariable("businessKey","100");]]></camunda:script>
       <bpmn:outgoing>SequenceFlow_03t924v</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_15w0h2m</bpmn:outgoing>
     </bpmn:eventBasedGateway>
-    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_0ri55mu">
+    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_0ri55mu" name="aktuelle Mieter schlägt Nachmieter vor">
       <bpmn:incoming>SequenceFlow_15w0h2m</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0kanmqa</bpmn:outgoing>
       <bpmn:messageEventDefinition messageRef="Message_0yv0471" />
@@ -472,7 +484,7 @@ execution.setVariable("businessKey","100");]]></camunda:script>
     <bpmn:userTask id="Task_0ywghof" name="Prüfung Nachmieter">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="newCandidateFound" type="boolean" />
+          <camunda:formField id="newCandidateFound" label="Ist ein geeigneter Nachmieter vorhanden?" type="boolean" defaultValue="false" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0kanmqa</bpmn:incoming>
@@ -482,6 +494,11 @@ execution.setVariable("businessKey","100");]]></camunda:script>
       </bpmn:multiInstanceLoopCharacteristics>
     </bpmn:userTask>
     <bpmn:userTask id="Task_1akb3nj" name="Mitteilung Kündigungstermin gemäss Vertrag">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="acceptedEndDateOContract" label="Vom Vermieter akzeptiertes Enddatum des Mietverhältnisses eingeben" type="date" />
+        </camunda:formData>
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_10x4x1y</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_0t0sdk4</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0i1r2f7</bpmn:outgoing>
@@ -494,10 +511,21 @@ execution.setVariable("businessKey","100");]]></camunda:script>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="SequenceFlow_13p3gsi" sourceRef="Task_1d256un" targetRef="IntermediateThrowEvent_0em6n9s" />
-    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_0em6n9s">
+    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_0em6n9s" name="Mieter über Standardprozedur informieren">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="messageName">AdhereToStandardProcess</camunda:inputParameter>
+          <camunda:inputParameter name="businessKey">100</camunda:inputParameter>
+          <camunda:inputParameter name="messageBody">
+            <camunda:map>
+              <camunda:entry key="correlationKey">${correlationKey}</camunda:entry>
+            </camunda:map>
+          </camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_13p3gsi</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_16kdo65</bpmn:outgoing>
-      <bpmn:messageEventDefinition />
+      <bpmn:messageEventDefinition messageRef="Message_1rl5v4p" />
     </bpmn:intermediateThrowEvent>
     <bpmn:scriptTask id="Task_1d256un" name="Kündigunsstatus im Mietdossier aktualisieren" scriptFormat="javascript">
       <bpmn:incoming>SequenceFlow_0i1r2f7</bpmn:incoming>
@@ -507,10 +535,6 @@ execution.setVariable("businessKey","100");]]></camunda:script>
       </bpmn:dataOutputAssociation>
       <bpmn:script>cancellationDate = Date();</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:manualTask id="Task_17mbi6e" name="Kündigung verschieben">
-      <bpmn:incoming>SequenceFlow_0hql4u7</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1tqcn27</bpmn:outgoing>
-    </bpmn:manualTask>
     <bpmn:endEvent id="EndEvent_0ua3kb0">
       <bpmn:incoming>SequenceFlow_1tqcn27</bpmn:incoming>
     </bpmn:endEvent>
@@ -580,8 +604,8 @@ execution.setVariable("businessKey","100");]]></camunda:script>
     <bpmn:scriptTask id="Task_18y7b03" name="Mieterdossier aktualisieren" scriptFormat="javascript">
       <bpmn:incoming>SequenceFlow_11t0zi6</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_012do0v</bpmn:outgoing>
-      <bpmn:dataOutputAssociation id="DataOutputAssociation_16vu2jp">
-        <bpmn:targetRef>DataStoreReference_0m7qsji</bpmn:targetRef>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0h3cmj6">
+        <bpmn:targetRef>DataStoreReference_18mq6i5</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
       <bpmn:script>Math.random();</bpmn:script>
     </bpmn:scriptTask>
@@ -594,7 +618,7 @@ execution.setVariable("businessKey","100");]]></camunda:script>
     <bpmn:userTask id="Task_10vs30t" name="Mietfläche vom Mieter abnehmen">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="damagesFound" label="Mängel festgestellt" type="boolean" defaultValue="true" />
+          <camunda:formField id="damagesFound" label="Wurden Mängel festgestellt?" type="boolean" defaultValue="true" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1894ce1</bpmn:incoming>
@@ -686,7 +710,7 @@ execution.setVariable("businessKey","100");]]></camunda:script>
     <bpmn:userTask id="Task_1ypxy9p" name="Schlussrechnung erstellen">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="finalAmount" label="Schlussrechnungsbetrag" type="string" />
+          <camunda:formField id="finalAmount" label="Berechneten Schlussrechnungsbetrag eingeben" type="string" />
         </camunda:formData>
         <camunda:inputOutput>
           <camunda:outputParameter name="finalPaymentReceived">
@@ -708,7 +732,7 @@ execution.setVariable("businessKey","100");]]></camunda:script>
     <bpmn:userTask id="Task_1mchah7" name="Verrechnung Schlussrechnung mit Mietzinsdepot">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="totalDebtDemanded" label="Geforderte Gesamtsumme" type="string" />
+          <camunda:formField id="totalDebtDemanded" label="Neu berechnete geforderte Gesamtsumme eingeben" type="string" />
         </camunda:formData>
         <camunda:inputOutput>
           <camunda:outputParameter name="currentDebtNotTooHigh">
@@ -803,12 +827,21 @@ execution.setVariable("businessKey","100");]]></camunda:script>
         <bpmn:targetRef>DataStoreReference_18mq6i5</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:manualTask>
+    <bpmn:userTask id="Task_17mbi6e" name="Kündigung verschieben">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="cancelProcessForPremiumCustomer" label="Bestätige Prozessabbruch beim Premiumkunden" type="boolean" defaultValue="true" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0hql4u7</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1tqcn27</bpmn:outgoing>
+    </bpmn:userTask>
     <bpmn:association id="Association_13bnois" sourceRef="Task_1l9bpr4" targetRef="TextAnnotation_0dq87kf" />
     <bpmn:textAnnotation id="TextAnnotation_0dq87kf">    <bpmn:text>Das CRM liefert nach Eingabe der Stammdaten die Information,ob der Kündigungsprozess bereits läuft. Falls ja, kann der Prozess sofort beendet werden. Da für diesen Prototypen keine CRM-Anbindung möglich ist, wird die Information durch eine Zufallszahl generiert: in 90% aller Fälle ist der Prozess noch nicht eingeleitet. Ist der Kündigungsprozess noch nicht eingeleitet, wird die ID des Mieterdossiers ausgegeben.</bpmn:text>
 </bpmn:textAnnotation>
   </bpmn:process>
-  <bpmn:message id="Message_0wjvp9r" name="MieterHatKuendigungEingereicht" />
-  <bpmn:message id="Message_0yv0471" name="NachmieterVorgeschlagen" />
+  <bpmn:message id="Message_0wjvp9r" name="RenterSendsRentCancellation" />
+  <bpmn:message id="Message_0yv0471" name="newRentersFound" />
   <bpmn:signal id="Signal_1hr4p0m" name="callJudge" />
   <bpmn:signal id="Signal_01jt410" name="getPolice" />
   <bpmn:error id="Error_1agzoig" name="Error_KundeNichtImCrm" errorCode="10" />
@@ -819,6 +852,8 @@ execution.setVariable("businessKey","100");]]></camunda:script>
   <bpmn:signal id="Signal_1kcf940" name="courtJudgement" />
   <bpmn:signal id="Signal_1s11c7e" name="Signal_2d3sd3p" />
   <bpmn:escalation id="Escalation_1v9jode" name="Escalation_23754na" escalationCode="escalation" />
+  <bpmn:message id="Message_1i4vvzk" name="Message_1bsp7n5" />
+  <bpmn:message id="Message_1rl5v4p" name="AdhereToStandardProcess" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1qhzlnj">
       <bpmndi:BPMNShape id="Participant_0vafkkl_di" bpmnElement="Participant_0vafkkl">
@@ -894,14 +929,14 @@ execution.setVariable("businessKey","100");]]></camunda:script>
       <bpmndi:BPMNShape id="IntermediateCatchEvent_0ri55mu_di" bpmnElement="IntermediateCatchEvent_0ri55mu">
         <dc:Bounds x="1021" y="435" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="994" y="475" width="90" height="12" />
+          <dc:Bounds x="927" y="435" width="76" height="36" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_15w0h2m_di" bpmnElement="SequenceFlow_15w0h2m">
         <di:waypoint xsi:type="dc:Point" x="1039" y="570" />
         <di:waypoint xsi:type="dc:Point" x="1039" y="471" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1046.590909090909" y="492.5" width="73" height="36" />
+          <dc:Bounds x="1048" y="508" width="73" height="24" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0kanmqa_di" bpmnElement="SequenceFlow_0kanmqa">
@@ -1019,7 +1054,7 @@ execution.setVariable("businessKey","100");]]></camunda:script>
       <bpmndi:BPMNShape id="IntermediateThrowEvent_0xwsl4x_di" bpmnElement="IntermediateThrowEvent_0em6n9s">
         <dc:Bounds x="1747" y="577" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1719" y="617" width="90" height="12" />
+          <dc:Bounds x="1721" y="617" width="89" height="36" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_1s0wwpo_di" bpmnElement="Task_0ywghof">
@@ -1130,7 +1165,7 @@ execution.setVariable("businessKey","100");]]></camunda:script>
         <di:waypoint xsi:type="dc:Point" x="3378" y="671" />
         <di:waypoint xsi:type="dc:Point" x="3476" y="671" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3288.5" y="691.5" width="85" height="24" />
+          <dc:Bounds x="3389" y="617" width="85" height="24" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ExclusiveGateway_0rvjws9_di" bpmnElement="ExclusiveGateway_0rvjws9" isMarkerVisible="true">
@@ -1885,7 +1920,7 @@ execution.setVariable("businessKey","100");]]></camunda:script>
         <di:waypoint xsi:type="dc:Point" x="1702" y="1136" />
         <di:waypoint xsi:type="dc:Point" x="1702" y="1253" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1712" y="1193.057142857143" width="73" height="24" />
+          <dc:Bounds x="1712" y="1193" width="73" height="24" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_0ua3kb0_di" bpmnElement="EndEvent_0ua3kb0">
@@ -1901,9 +1936,6 @@ execution.setVariable("businessKey","100");]]></camunda:script>
           <dc:Bounds x="1672" y="1361" width="90" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ManualTask_1wjdfzy_di" bpmnElement="Task_17mbi6e">
-        <dc:Bounds x="1652" y="1253" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ScriptTask_008se49_di" bpmnElement="Task_1sxpz6u">
         <dc:Bounds x="1787" y="939" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -2011,7 +2043,7 @@ execution.setVariable("businessKey","100");]]></camunda:script>
       <bpmndi:BPMNShape id="IntermediateThrowEvent_1vondyy_di" bpmnElement="IntermediateThrowEvent_0ldop50">
         <dc:Bounds x="2629" y="756" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2602" y="721" width="89" height="24" />
+          <dc:Bounds x="2601" y="712" width="89" height="24" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_198rhex_di" bpmnElement="SequenceFlow_198rhex">
@@ -2077,11 +2109,6 @@ execution.setVariable("businessKey","100");]]></camunda:script>
       <bpmndi:BPMNShape id="ScriptTask_14cz797_di" bpmnElement="Task_18y7b03">
         <dc:Bounds x="2679" y="966" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="DataOutputAssociation_16vu2jp_di" bpmnElement="DataOutputAssociation_16vu2jp">
-        <di:waypoint xsi:type="dc:Point" x="2679" y="1000" />
-        <di:waypoint xsi:type="dc:Point" x="2103" y="933" />
-        <di:waypoint xsi:type="dc:Point" x="506" y="824" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_1jeldem_di" bpmnElement="EndEvent_078hily">
         <dc:Bounds x="2711" y="1094" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -2210,6 +2237,13 @@ execution.setVariable("businessKey","100");]]></camunda:script>
         <bpmndi:BPMNLabel>
           <dc:Bounds x="3587.5" y="657" width="0" height="12" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_159sgdf_di" bpmnElement="Task_17mbi6e">
+        <dc:Bounds x="1652" y="1253" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0h3cmj6_di" bpmnElement="DataOutputAssociation_0h3cmj6">
+        <di:waypoint xsi:type="dc:Point" x="2779" y="1009" />
+        <di:waypoint xsi:type="dc:Point" x="3667.185" y="1068.38" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
